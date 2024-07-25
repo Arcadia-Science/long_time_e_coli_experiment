@@ -3,7 +3,7 @@ library(ggplot2)
 library(dplyr)
 
 
-vcf.fn <- "vcf_files/subsample_test_allele_edit.vcf"
+vcf.fn <- "vcf_files/annotated_output_biallelic_synonymous_subsample_refedit.vcf"
 
 snpgdsVCF2GDS(vcf.fn, "test.gds", method="biallelic.only")
 
@@ -26,9 +26,10 @@ df <- metadata %>% select(SRA.Accession, Isolation.Country, Size, Season, Sequen
 
 pl <- ggplot(df, aes(x=EV1, y=EV2, colour = Isolation.Country)) + geom_point()
 
-#pl <- ggplot(df, aes(x=EV1, y=EV2, colour = Size)) + geom_point()
+df %>% filter(Isolation.Country != 'Norway' & Isolation.Country != 'United Kingdom'& Isolation.Country != 'England') %>%
+ggplot( aes(x=EV1, y=EV2, colour = Isolation.Country)) + geom_point()+ stat_ellipse()
 
 
 #pl <- ggplot(df, aes(x=EV1, y = Size)) + geom_point()
 
-ggsave('PCA.pdf', pl)
+ggsave('PCA.pdf', last_plot())
