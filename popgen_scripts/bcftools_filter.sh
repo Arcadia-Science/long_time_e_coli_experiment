@@ -36,3 +36,5 @@ bcftools view -M2 -m2 -v snps -Oz  > vcf_files/annotated_output_biallelic.vcf.gz
 
 bcftools query vcf_files/annotated_output_biallelic.vcf.gz  -f "%CHROM\t%POS\t%ALT\t[\t%GT]\n" \
 -o vcf_files/annotated_output_biallelic.txt
+
+
