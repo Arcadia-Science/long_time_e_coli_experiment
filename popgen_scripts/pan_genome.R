@@ -1,0 +1,18 @@
+library(data.table)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+df <- read.csv('pangenome/whole_pan_ecor_presence_absence.csv') %>% select(-X,-Group_annotation)
+
+df2 <- df %>% pivot_longer(cols = c(-1)) %>% group_by(Locus, value) %>% summarize(count = n())
+
+good_contigs <- df2 %>% filter(value == 'Present' & count == 72) %>% select(Locus) %>% unique()
+
+write.table(good_contigs,'pangenome/ecor_shared_contigs.txt', sep = '\t', row.names =F, col.names = F, quote=F)
+
+
+pl <- ggplot(df2, aes(x=count, colour = value)) + geom_histogram(alpha=0.5, position="identity")
+
+
+ggsave('ecor_presence_absence_hist.png', pl)

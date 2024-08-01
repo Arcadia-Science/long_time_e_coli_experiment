@@ -4,7 +4,7 @@ library(gridExtra)
 library(tidyr)
 
 #input counts scarped from VCF (assuming missing GT is ref)
-df <- read.table("vcf_files/annotated_output_biallelic_SFS_counts.txt")
+df <- read.table("vcf_files/annotated_output_biallelic_goodcontigs_SFS_counts.txt")
 
 #simplify SNPeff annotation
 df <- df %>% mutate(annot = ifelse(grepl('HIGH', V6), 'LOF',
@@ -24,7 +24,7 @@ sfs <- df %>% group_by(annot) %>%
 #plot SFS
 pl1 <- ggplot(sfs, aes(x=V4, y=AF, colour = annot)) + geom_point() + geom_line()  + xlim(0,20)
 
-ggsave('SFS.pdf', pl1)
+ggsave('SFS_goodcontigs.pdf', pl1)
 
 ############################
 ##look at coverage by dividing allele count by total depth

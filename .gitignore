@@ -1,2 +1,8 @@
 *vcf
 *vcf.gz
+*.txt
+*.gds
+*.fasta
+*.csv
+*.pdf
+*.png
