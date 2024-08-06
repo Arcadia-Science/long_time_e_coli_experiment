@@ -41,13 +41,10 @@ cat <(grep -e '#' vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit.v
 
 cat <(grep -e '#' vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs.vcf) <(grep -Ev '#' vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs.vcf | sed -n '0~10p') > vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs_subsample.vcf
 
-#grep -e '#' vcf_files/annotated_output_biallelic_synonymous.vcf > vcf_files/annotated_output_biallelic_synonymous_header.vcf
-#grep -Ev '#' vcf_files/annotated_output_biallelic_synonymous.vcf | sed -n '0~50p' > vcf_files/annotated_output_biallelic_synonymous_subsample_nohead.vcf
-#cat vcf_files/annotated_output_biallelic_synonymous_header.vcf vcf_files/annotated_output_biallelic_synonymous_subsample_nohead.vcf >  vcf_files/annotated_output_biallelic_synonymous_subsample.vcf
 
-rm vcf_files/filtered_output_biallelic_header.vcf
-rm vcf_files/subsample_nohead.vcf
-
+bcftools query -H -f "%CHROM\t%POS\t%ALT\t%AC\t%DP[\t%GT]\n" \
+vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs_subsample.vcf \
+-o vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs_subsample_geno.txt
 
 ##################################################
 #SFS data prep
