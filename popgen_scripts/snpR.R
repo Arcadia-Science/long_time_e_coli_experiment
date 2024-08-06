@@ -17,10 +17,10 @@ dat <- import.snpR.data('vcf_files/annotated_output_biallelic_synonymous_MAF7_re
 
 
 p <- plot_structure(dat, facet = 'isolation_country', k = 2:3, clumpp = FALSE, method = "snapclust")
-ggsave('snapclust_country_k10.png',plot = p[[1]], width = 20)
+ggsave('figs/snapclust_country_k10.png',plot = p[[1]], width = 20)
 
 p2 <- plot_structure(dat, facet = 'collection_year', k = 2:3, clumpp = FALSE, method = "snapclust")
-ggsave('snapclust_year.png',plot = p2[[1]], width = 20)
+ggsave('figs/snapclust_year.png',plot = p2[[1]], width = 20)
 
 
 
@@ -31,7 +31,7 @@ p <- plot_structure(dat, facet = 'isolation_country', k = 9:10,
         structure_path = '/home/ubuntu/miniconda3/envs/popgenR/bin/structure')
 
 
-ggsave('structure_country_test_k10.png',plot = p[[1]], width = 20)
+ggsave('figs/structure_country_test_k9_10.png',plot = p[[1]], width = 20)
 
 
 #########################
@@ -42,4 +42,4 @@ ggsave('structure_country_test_k10.png',plot = p[[1]], width = 20)
 #filter(K == 'K = 10')
 
 df_clusters_k10 <- p[[3]] %>% filter( Percentage > 0.9)
-write.table(df_clusters_k10, 'tables/structure_synonymous_goodcontigs_k2_k3_results.txt', sep = '\t', quote = F, row.names =F)
+write.table(df_clusters_k10, 'tables/structure_synonymous_goodcontigs_k9_k10_results.txt', sep = '\t', quote = F, row.names =F)

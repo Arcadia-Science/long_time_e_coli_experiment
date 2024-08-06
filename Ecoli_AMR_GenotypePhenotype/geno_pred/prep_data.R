@@ -62,7 +62,7 @@ model_rrblup <- mixed.solve(input_pheno2, Z = input_geno2, K=NULL, SE = FALSE, r
 snp_effects <- model_rrblup$u
 
 ######################################################
-snp_effects2 <- t(snp_effects)
+df <- as.data.frame(snp_effects) %>% arrange(desc(snp_effects))
 
 df <- as.data.frame(snp_effects) %>% mutate(chrom = gsub('_([^_]*)$','',rownames(.)),
                                             pos = gsub('.*\\_','',rownames(.)))
