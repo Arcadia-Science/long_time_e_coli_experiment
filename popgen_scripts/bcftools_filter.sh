@@ -48,15 +48,13 @@ vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs_subsamp
 
 
 
-
-
-
-
-
-
-
-
-
+#######################
+#remove outlier samples
+cat <(zgrep -e '#' vcf_files/annotated_output_biallelic.vcf.gz) \
+ <(zgrep -Ev '#' vcf_files/annotated_output_biallelic.vcf.gz | zgrep -f pangenome/ecor_shared_contigs.txt ) | \
+zgrep -E 'synonymous|missense|HIGH|#' | \
+bcftools view -Ov -s ^ERR1218638,ERR1218722,ERR4035496,ERR4037257,SRR10271534,SRR10272173,SRR10272272,SRR10272285,SRR10272401,SRR2449168,SRR3588897,SRR3932419,SRR3982215,SRR850803 \
+-o vcf_files/annotated_output_biallelic_goodcontigs_remoutliers.vcf
 
 
 ##################################################
@@ -67,11 +65,12 @@ bcftools query   -f "%CHROM\t%POS\t%ALT\t%AC\t%DP\t%ANN\n" -o vcf_files/annotate
 
 
 
-#SFS data prep good contigs
+#SFS data prep good contigs and remove quad outlier samples
 cat <(zgrep -e '#' vcf_files/annotated_output_biallelic.vcf.gz) \
  <(zgrep -Ev '#' vcf_files/annotated_output_biallelic.vcf.gz | zgrep -f pangenome/ecor_shared_contigs.txt ) | \
 zgrep -E 'synonymous|missense|HIGH|#' | \
-bcftools query  -f "%CHROM\t%POS\t%ALT\t%AC\t%DP\t%ANN\n" -o vcf_files/annotated_output_biallelic_goodcontigs_SFS_counts.txt
+bcftools view -s ^ERR1218638,ERR1218722,ERR4035496,ERR4037257,SRR10271534,SRR10272173,SRR10272272,SRR10272285,SRR10272401,SRR2449168,SRR3588897,SRR3932419,SRR3982215,SRR850803 | \
+bcftools query  -f "%CHROM\t%POS\t%ALT\t%AC\t%DP\t%ANN\n" -o vcf_files/annotated_output_biallelic_goodcontigs_SFS_counts_remoutliers.txt
 
 
 #sum value of genotype fields to get allele count
@@ -89,7 +88,7 @@ cat <(zgrep -e '#' vcf_files/annotated_output_biallelic.vcf.gz) \
  <(zgrep -Ev '#' vcf_files/annotated_output_biallelic.vcf.gz | zgrep -f pangenome/ecor_shared_contigs.txt ) | \
 zgrep -E 'synonymous|#' | \
 bcftools filter -i 'INFO/AC = 4'| \
-bcftools query -H -f "%CHROM\t%POS\t%ALT\t%AC\t%DP\t[\t%GT]%ANN\n" -o vcf_files/annotated_output_biallelic_goodcontigs_synonymous_quads_geno.txt
+bcftools query -H -f "%CHROM\t%POS\t%ALT\t%AC\t%DP\t[\t%GT]\t%ANN\n" -o vcf_files/annotated_output_biallelic_goodcontigs_synonymous_quads_geno.txt
 
 
 
