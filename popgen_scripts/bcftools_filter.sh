@@ -46,6 +46,19 @@ bcftools query -H -f "%CHROM\t%POS\t%ALT\t%AC\t%DP[\t%GT]\n" \
 vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs_subsample.vcf \
 -o vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs_subsample_geno.txt
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##################################################
 #SFS data prep
 zgrep -E 'synonymous|missense|HIGH|#' vcf_files/annotated_output_biallelic.vcf.gz | \
@@ -77,3 +90,16 @@ cat <(zgrep -e '#' vcf_files/annotated_output_biallelic.vcf.gz) \
 zgrep -E 'synonymous|#' | \
 bcftools filter -i 'INFO/AC = 4'| \
 bcftools query -H -f "%CHROM\t%POS\t%ALT\t%AC\t%DP\t[\t%GT]%ANN\n" -o vcf_files/annotated_output_biallelic_goodcontigs_synonymous_quads_geno.txt
+
+
+
+
+
+###############################
+#LD pruning
+
+bcftools +prune -m 0.25 -w 50000 vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs.vcf \
+-Ov > vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs_ldpruned.vcf
+
+
+cat <(grep -e '#' vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs_ldpruned.vcf) <(grep -Ev '#' vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs_ldpruned.vcf | sed -n '0~10p') > vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs_ldpruned_subsample.vcf

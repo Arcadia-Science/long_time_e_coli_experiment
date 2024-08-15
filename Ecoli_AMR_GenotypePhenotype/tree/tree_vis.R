@@ -23,11 +23,11 @@ metadata <- metadata %>% group_by(Other.Typing) %>%
                 mutate(mlst = ifelse(count_type < 100, 'NA', Other.Typing))
 
 
-cluster_data <- fread("tables/snapclust_synonymous_goodcontigs_k2_k10_results.txt")
+#cluster_data <- fread("tables/snapclust_synonymous_goodcontigs_k2_k10_results.txt")
 
 
 pl <- ggtree(tree_test,layout='circular') %<+% metadata
-ggsave('figs/test_tree_raxml.png', plot = pl)
+ggsave('figs/test_tree_raxml_aug14.png', plot = pl)
 
 pl2 <- pl + geom_tippoint(aes(colour = Isolation.Country),size = 0.0001)
 ggsave('figs/test_tree_country.png', plot = pl2)
