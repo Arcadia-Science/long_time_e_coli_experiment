@@ -8,7 +8,7 @@ library(data.table)
 
 tree_test <- read.newick("tree/alignment/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs_subsample.min4.phy.treefile")
 
-#tree_test<- read.newick ("tree/alignment/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs_subsample.min4.phy.raxml.lastTree.TMP")
+#tree_test<- read.newick ("tree/alignment_gyra/annotated_output_gyrA_refedit.min4.phy.treefile")
 
 metadata <- fread("strains_metadata_phenotypes_full.txt")
 
@@ -27,7 +27,7 @@ metadata <- metadata %>% group_by(Other.Typing) %>%
 
 
 pl <- ggtree(tree_test,layout='circular') %<+% metadata
-ggsave('figs/test_tree_raxml_aug14.png', plot = pl)
+ggsave('figs/test_tree_iqtree_gyra.png', plot = pl)
 
 pl2 <- pl + geom_tippoint(aes(colour = Isolation.Country),size = 0.0001)
 ggsave('figs/test_tree_country.png', plot = pl2)
@@ -37,7 +37,7 @@ ggsave('figs/test_tree_year.png', plot = pl3)
 
 
 pl4 <- pl + geom_tippoint(aes(colour = mlst),size = 0.001) +  theme(legend.position = "none")
-ggsave('figs/test_tree_mlst.png', plot = pl4)
+ggsave('figs/test_tree_iqtree_gyra_mlst.png', plot = pl4)
 pl4_2 <- pl + geom_tippoint(aes(colour = mlst),size = 0.001)
 ggsave('figs/test_tree_mlst_legend.png', plot = pl4_2)
 
