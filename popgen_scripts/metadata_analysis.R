@@ -28,3 +28,11 @@ corr_pheno <- cor(phenos2, use = 'complete.obs')
 
 p1 <- ggcorrplot(corr_pheno ) + theme(plot.background = element_rect(fill='white', color='white'))
 ggsave('figs/phenotype_correlations.png', p1)
+
+
+
+
+png('figs/phenotype_correlations_heatmap.png', width = 1000, height = 1000,res=499)
+#par(mar = c(5, 5, 5, 5))
+heatmap(x = corr_pheno, symm = TRUE,cex.axis=0.2, margins = c(5,5), cexRow = 0.33,  cexCol = 0.33)
+dev.off()

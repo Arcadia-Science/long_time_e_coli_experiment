@@ -88,3 +88,17 @@ pl4 <- ggtree(tree_test,layout='circular')
 
 pl7 <- gheatmap(pl4, geno_rr_subset2,width=0.2,color = NULL,colnames_angle=45) + theme(legend.position = "none")
 ggsave('figs/test_tree_iqtree_gyra_marker_gamma.png', plot = pl7)
+
+
+
+#plot effects of markers
+plot_markers <- geno_rr_subset2 %>% mutate(Resistance = ifelse(ciprofloxacin == 'Resistant',1,
+                                                ifelse(ciprofloxacin == 'Intermediate',0.5,
+                                                ifelse(ciprofloxacin == 'Susceptible',0,NA)))) %>%
+                                                        mutate(LMHECDEF_04343_259 = ifelse(as.numeric(as.character(LMHECDEF_04343_259)) > 0,1,0)) %>%
+                                                                mutate(genotype = paste0(LMHECDEF_04343_248,LMHECDEF_04343_259))
+
+pl_effect <- ggplot(plot_markers, aes(x=genotype, y = Resistance)) + geom_boxplot() +
+        geom_jitter(shape=16, position=position_jitter(0.05)) + theme_bw()
+
+ggsave('figs/histogram_ciprofloxacin_markers.png', plot = pl_effect, width = 5, height = 5)

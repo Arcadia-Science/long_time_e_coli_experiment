@@ -1,0 +1,98 @@
+MAC = [500]
+PHENOTYPES = ['ampicillin','ciprofloxacin']
+
+outlier_samples = ["^ERR1218638,ERR1218722,ERR4035496,ERR4037257,SRR10271534,SRR10272173,SRR10272272,SRR10272285,SRR10272401,SRR2449168,SRR3588897,SRR3932419,SRR3982215,SRR850803"]
+
+#PLINK_OUT_PREFIX =
+
+wildcard_constraints:
+    mac="|".join([str(m) for m in MAC]),
+    pheno="|".join(PHENOTYPES),
+
+
+
+rule all:
+    input:
+        expand("plink/annotated_output_MAF{mac}_{pheno}.fam", mac=MAC, pheno = PHENOTYPES),
+        expand("output/gwas_MAF{mac}_{pheno}_bslmm_blup.param.txt", mac=MAC, pheno = PHENOTYPES)
+
+
+ruleorder: run_GEMMA_gwas > edit_plink_fam > plink_generate_input > filter_variants
+
+
+#filter variants
+rule filter_variants:
+    input:
+        "../vcf_files/annotated_output.vcf.gz"
+    output:
+        "annotated_output_MAF{mac}.vcf"
+    conda:
+        "bcf"
+    shell:
+        "bcftools view {input} -s {outlier_samples} | \
+        bcftools filter -i 'AC > {wildcards.mac}' | \
+        sed 's/\.\:\./0\:255\,0/g' > {output}"
+
+
+
+#generate plink files for input to GEMMA
+rule plink_generate_input:
+    input:
+        "annotated_output_MAF{mac}.vcf" #try programatically adding output from last step
+    output:
+        "plink/annotated_output_MAF{mac}.fam",
+        "plink/annotated_output_MAF{mac}.bed"
+    conda:
+        "popgenR"
+    shell:
+        "plink --vcf {input} --make-bed --out plink/annotated_output_MAF{wildcards.mac} --allow-extra-chr"
+
+
+#generate phenotype files
+rule edit_plink_fam:
+    input:
+        "plink/annotated_output_MAF{mac}.fam"
+    output:
+        "plink/annotated_output_MAF{mac}_{pheno}.fam"
+    params:
+        "{pheno}"
+    conda:
+        "popgenR"
+    script:
+        "gwas_plink_fam_edit.R"
+
+
+
+#generate GEMMA relatedness matrix
+rule run_GEMMA_relmatrix:
+    input:
+        "plink/annotated_output_MAF{mac}.bed"
+    output:
+        "output/annotated_output_MAF{mac}.cXX.txt"
+    conda:
+        "popgenR"
+    shell:
+        "gemma -bfile plink/annotated_output_MAF{wildcards.mac}  -gk 1 -o annotated_output_MAF{wildcards.mac}"
+
+
+
+
+
+#run GEMMA genopred
+rule run_GEMMA_gwas:
+    input:
+        "plink/annotated_output_MAF{mac}.bed",
+        "plink/annotated_output_MAF{mac}_{pheno}.fam",
+        "output/annotated_output_MAF{mac}.cXX.txt"
+    output:
+        "output/gwas_MAF{mac}_{pheno}_bslmm_blup.param.txt"
+    #params:
+    #    "{pheno}"
+    conda:
+        "popgenR"
+    threads:6
+    shell:
+        """
+        cp plink/annotated_output_MAF{wildcards.mac}_{wildcards.pheno}.fam plink/annotated_output_MAF{wildcards.mac}.fam
+        gemma -bfile plink/annotated_output_MAF{wildcards.mac} -bslmm 2  -o gwas_MAF{wildcards.mac}_{wildcards.pheno}_bslmm_blup -k output/annotated_output_MAF{wildcards.mac}.cXX.txt
+        """

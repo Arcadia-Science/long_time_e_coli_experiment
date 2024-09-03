@@ -22,9 +22,13 @@ sfs <- df %>% group_by(annot) %>%
 
 
 #plot SFS
-pl1 <- ggplot(sfs, aes(x=V4, y=AF, colour = annot)) + geom_point() + geom_line()  + xlim(0,20)
+pl1 <- ggplot(sfs, aes(x=V4, y=AF, colour = annot)) + geom_point() + geom_line()  + xlim(0,20) + theme_bw() + xlab('Allele Count') + ylab('Proportion of SNPs')
 
-ggsave('figs/SFS_goodcontigs_remoutliers.png', pl1)
+ggsave('figs/SFS_goodcontigs_remoutliers.png', pl1, height = 5)
+
+
+
+
 
 ############################
 ##look at coverage by dividing allele count by total depth

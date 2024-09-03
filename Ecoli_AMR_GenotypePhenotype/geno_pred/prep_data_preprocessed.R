@@ -17,8 +17,8 @@ convert_gt_value <- function(x){ gsub("0", "-1", x)}
 #input data
 pheno <- fread('strains_metadata_phenotypes_full.txt')
 
-#geno <- fread('vcf_files/annotated_output_biallelic_synonymous_MAF7_refedit_goodcontigs_subsample_geno.txt')
-geno <- fread('geno_pred/annotated_output_biallelic_refedit_goodcontigs_ldpruned_remoutliers_edited_subsample.txt')
+
+geno <- fread('geno_pred/annotated_output_MAF380_edited.txt')
 
 
 
@@ -48,7 +48,7 @@ geno_rr_2 <- geno_rr%>%
   pivot_wider(names_from=c(snp_id))
 
 #head(geno_rr_2[,1:7])
-
+geno_rr_2 <- t(geno_rr)
 ######################################################
 #head(pheno_geno[,1:7])
 pheno_geno <- inner_join(pheno2, geno_rr_2) %>% filter(!is.na(ciprofloxacin))
@@ -76,4 +76,3 @@ df2 <- df %>% group_by(chrom) %>% summarize(count_snp = n(), effect = mean(snp_e
 
 gene_names <- fread('pangenome/gene_names.txt', fill=TRUE, header = F) %>% rename(chrom = V1, gene = V2)
 
-df
