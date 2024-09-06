@@ -1,0 +1,60 @@
+###############
+#### SETUP ####
+###############
+
+# Defailt configfile. Can be changed at command-line (--configfile)
+configfile: 'snakemake_config.yaml'
+
+
+# Load sample sheet
+#SAMPLE_SHEET_DF = pd.read_table(config['samples'], sep='\t')
+
+# Sample and chromosome info
+#SAMPLES = SAMPLE_SHEET_DF['sample'].tolist()
+#HABITATS = SAMPLE_SHEET_DF['site'].unique().tolist()
+#CHROMOSOMES = pd.read_table(config['chromosomes'], header=None).iloc[:,0].tolist()
+
+
+
+
+
+##################
+#### PIPELINE ####
+##################
+
+# Only ever consider chromosomes in chromosome file
+#wildcard_constraints:
+#    chrom='|'.join([x for x in CHROMOSOMES]),
+#    habitat='|'.join([x for x in HABITATS])
+
+
+
+rule all:
+   input:
+        'vcf_files/annotated_output.vcf.gz',
+        'pangenome/ecor_shared_contigs.txt',
+        'vcf_files/annotated_output_biallelic.vcf.gz'
+
+
+rule get_data:
+    input:
+    output:
+        'vcf_files/annotated_output.vcf.gz',
+        'vcf_files/filtered_output.vcf.gz',
+        'pangenome_genomes_SRA_GCA.csv',
+        'pangenome/whole_pan_ecor_presence_absence.csv',
+        'pangenome/whole_pangenome.fasta',
+        'phenotype_matrix/phenotype_matrix_08302024.csv',
+        'phenotype_matrix/SRA_to_genome_name.csv'
+
+    shell:
+        'aws s3 cp s3://ecoli-pangenomics-data/Ecoli_AMR_GenotypePhenotype/ Ecoli_AMR_GenotypePhenotype --recursive'
+
+
+
+
+
+
+# Snakefiles with rules for particular pieces of the pipeline
+# See Snakefiles for details
+include: 'rules/filtering.smk'
