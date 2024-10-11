@@ -1,6 +1,7 @@
 MAC = [250]
 #PHENOTYPES = ['ciprofloxacin', 'ampicillin', 'cefotaxime', 'ceftazidime', 'gentamicin', 'amoxicillin.clavulanic.acid', 'piperacillin.tazobactam','trimethoprim.sulfamethoxazole']
-PHENOTYPES = ['ampicillin','ciprofloxacin', 'trimethoprim.sulfamethoxazole']
+#PHENOTYPES = ['ampicillin','ciprofloxacin', 'trimethoprim.sulfamethoxazole']
+PHENOTYPES = ['cefotaxime','ceftazidime']
 
 outlier_samples = ["^ERR1218638,ERR1218722,ERR4035496,ERR4037257,SRR10271534,SRR10272173,SRR10272272,SRR10272285,SRR10272401,SRR2449168,SRR3588897,SRR3932419,SRR3982215,SRR850803"]
 

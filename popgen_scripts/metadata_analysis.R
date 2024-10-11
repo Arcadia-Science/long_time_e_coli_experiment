@@ -16,7 +16,8 @@ table(outliers$Other.Typing)
 table(outliers$Collection.Year)
 
 
-phenos <- df %>% select(ciprofloxacin, ampicillin, cefotaxime, ceftazidime, gentamicin, amoxicillin.clavulanic.acid, piperacillin.tazobactam,trimethoprim.sulfamethoxazole)
+#phenos <- df %>% select(ciprofloxacin, ampicillin, cefotaxime, ceftazidime, gentamicin, amoxicillin.clavulanic.acid, piperacillin.tazobactam,trimethoprim.sulfamethoxazole,cefuroxime,piperacillin.tazobactam)
+phenos <- df %>% select(ciprofloxacin, ampicillin, cefotaxime, ceftazidime, gentamicin, amoxicillin.clavulanic.acid, piperacillin.tazobactam,trimethoprim.sulfamethoxazole,piperacillin.tazobactam)
 phenos2 <- phenos %>%
             mutate(across(everything(),~ gsub("Resistant",1, .))) %>%
             mutate(across(everything(),~ gsub("Intermediate",0, .))) %>%

@@ -33,7 +33,9 @@ rule all:
    input:
         'vcf_files/annotated_output.vcf.gz',
         'pangenome/ecor_shared_contigs.txt',
-        'vcf_files/annotated_output_biallelic.vcf.gz'
+        'figs/genomic_PCA.txt',
+        'figs/SFS_remoutliers.txt'
+
 
 
 rule get_data:
@@ -41,20 +43,21 @@ rule get_data:
     output:
         'vcf_files/annotated_output.vcf.gz',
         'vcf_files/filtered_output.vcf.gz',
-        'pangenome_genomes_SRA_GCA.csv',
+        'pangenome/pangenome_genomes_SRA_GCA.csv',
         'pangenome/whole_pan_ecor_presence_absence.csv',
         'pangenome/whole_pangenome.fasta',
         'phenotype_matrix/phenotype_matrix_08302024.csv',
-        'phenotype_matrix/SRA_to_genome_name.csv'
+        'phenotype_matrix/SRA_to_genome_name.csv',
+        'strains_metadata.csv'
+
 
     shell:
         'aws s3 cp s3://ecoli-pangenomics-data/Ecoli_AMR_GenotypePhenotype/ Ecoli_AMR_GenotypePhenotype --recursive'
 
-
-
-
-
+#workdir: "path/to/workdir"
 
 # Snakefiles with rules for particular pieces of the pipeline
 # See Snakefiles for details
 include: 'rules/filtering.smk'
+include: 'rules/popgen_analyses.smk'
+#include: '../geno_pred/Snakemake'

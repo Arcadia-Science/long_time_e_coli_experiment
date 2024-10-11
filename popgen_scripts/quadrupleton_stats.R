@@ -3,31 +3,17 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
-df <- fread('vcf_files/annotated_output_biallelic_goodcontigs_synonymous_quads_geno.txt')
-
-df_geno <- df %>% select(-(1:6),-ncol(df))
-sumqaud <- colSums(df_geno, 1)
-
-
-count(df_geno,1)
-
-df2 <- apply(X = df_geno, MARGIN = 2, FUN = as.numeric)
-
-df_geno2 <- sapply( df_geno, as.numeric )
+#df <- fread('vcf_files/annotated_output_biallelic_goodcontigs_synonymous_quads_geno.txt')
+input_file <- snakemake@input[[1]]
+out_file <- snakemake@out[[1]]
 
 
-df2[] <- lapply(df_geno, function(x) as.numeric(as.character(x)))
-
-
-
+df <- fread(input_file)
 
 
 #funs to cleat bcftools column names
 colClean_bracket <- function(x){ colnames(x) <- gsub(".*\\]", "", colnames(x)); x }
 colClean_GT     <- function(x){ colnames(x) <- gsub("\\:.*", "", colnames(x)); x }
-#convert genotype values for rrBLUP to conform to -1 = 0/0
-convert_gt_value <- function(x){ gsub("0", "-1", x)}
-
 convert_numeric <- function(x){ as.numeric(x)}
 
 df2 <- df %>% colClean_bracket(.) %>% colClean_GT(.) %>%
@@ -38,7 +24,10 @@ df2 <- df %>% colClean_bracket(.) %>% colClean_GT(.) %>%
 
 #viz results
 df3 <- df2 %>% select(-snp_id) %>% colSums(., na.rm=T)
-table(df3)
 
 #pull out outliers
-df3 %>% as.data.frame(.) %>% filter(`.` > 500)
+outlier_samples <- df3 %>% as.data.frame(.) %>% filter(`.` > 500) %>% tibble:::rownames_to_column(.) %>% select(rowname)
+
+write.table(outliers_samples, out_file, quote = F, col.names = F, row.names = T, sep = '\t' )
+
+#write.table(outlier_samples, 'pangenome/outlier_samples.txt', quote = F, col.names = F, row.names = F, sep = '\t' )

@@ -33,3 +33,21 @@ gemma -bfile geno_pred/plink/annotated_output_MAF300 -bslmm 3 -k output/annotate
 
 #2 is ridge/BLUP fastest
 gemma -bfile geno_pred/plink/annotated_output_MAF300 -bslmm 2 -k output/annotated_output_MAF300.cXX.txt -o gwas_MAF300_ampicillin_bslmm_blup
+
+
+cat geno_pred/output/gwas_MAF250_piperacillin.tazobactam_bslmm_blup.param.txt
+
+
+
+###
+#concatenate results of GWAS
+rm geno_pred/output/gwas_MAF250_ALL_bslmm_blup.param.txt
+awk '{print $0, FILENAME}' geno_pred/output/gwas_MAF250_*_bslmm_blup.param.txt | awk '{gsub(/geno.*MAF250_|_bslmm.*/,"",$NF);print}' | sed '/^chr.*$/{x;/^$/!d;g;}'  > geno_pred/output/gwas_MAF250_ALL_bslmm_blup.param.txt
+
+rm geno_pred/output/gwas_MAF250_ALL_bslmm_probit.param.txt
+awk '{print $0, FILENAME}' geno_pred/output/gwas_MAF250_*_bslmm_probit.param.txt | awk '{gsub(/geno.*MAF250_|_bslmm.*/,"",$NF);print}' | sed '/^chr.*$/{x;/^$/!d;g;}'  > geno_pred/output/gwas_MAF250_ALL_bslmm_probit.param.txt
+
+###
+#concatenate results of GWAS presence absence
+rm geno_pred/presence_absence/output/presence_absence_ALL_bslmm_blup.param.txt
+awk '{print $0, FILENAME}' geno_pred/presence_absence/output/presence_absence_all_*_bslmm_blup.param.txt | awk '{gsub(/geno.*all_|_bslmm.*/,"",$NF);print}' | sed '/^chr.*$/{x;/^$/!d;g;}'  > geno_pred/presence_absence/output/presence_absence_ALL_bslmm_blup.param.txt

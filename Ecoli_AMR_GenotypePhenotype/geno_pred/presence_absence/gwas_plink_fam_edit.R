@@ -7,7 +7,7 @@ input_file <- snakemake@input[[1]]
 pheno_select <- snakemake@params[[1]]
 
 print(pheno_select)
-df <- fread('../strains_metadata_phenotypes_full.txt')
+df <- fread('../../strains_metadata_phenotypes_full.txt')
 fam <- fread(input_file) %>% rename(sample.id = V1 )
 
 #fam <- fread('plink/annotated_output_MAF250.fam') %>% rename(sample.id = V1 )
