@@ -30,18 +30,60 @@ rule genotypic_PCA:
 
 
 #plot SFS
-rule generate_SFS_plots:
+rule generate_sfs_plots:
     input:
-        sfs_no_outlier_input = rules.generate_sfs_input.output.sfs_outliers_removed
+        sfs_no_outlier_input = rules.generate_sfs_input.output.sfs_outliers_removed,
+        presence_absence_input = 'presence_absence_data/presence_absence_sfs.txt',
+        presence_absence_loci = 'presence_absence_data/presence_absence_all.bim'
     output:
-        sfs_fig = 'figs/SFS_remoutliers.txt'
+        sfs_fig = 'figs/SFS_combined_remoutliers.png'
     script:
         "../../popgen_scripts/SFS.R"
 
 
+#download repo for converting VCF to alignment file for phylogenomic scripts
+rule clone_vcf2phylip:
+    output:
+        directory('vcf2phylip'),
+        'vcf2phylip/vcf2phylip.py'
+    shell:
+        """
+        git clone https://github.com/edgardomortiz/vcf2phylip.git
+        """
 
 
+#generate alignment from vcf
+rule generate_wg_alignment:
+    input:
+        'vcf2phylip/vcf2phylip.py',
+        popgen_vcf = rules.generate_popgen_input.output.vcf_syn_popgen_subsampled,
+    output:
+        alignment_genome = 'tree/alignment/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAC10_refedit_subsample.min4.phy',
+    shell:
+        """
+        vcf2phylip/vcf2phylip.py --output-folder tree/alignment_remoutliers_syn_MAC10/ -i {input.popgen_vcf}
+        """
 
-#plot presence absence
+#generate species tree
+rule generate_species_tree:
+    input:
+        alignment_genome = rules.generate_wg_alignment.output.alignment_genome
+    output:
+        tree_genome = 'tree/alignment/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAC10_refedit_subsample.min4.phy.treefile',
+    shell:
+        """
+        iqtree -s {input.alignment_genome}  -m GTR+ASC
+        """
 
-#generate species tree and generate tree plots
+
+#generate tree plots
+rule generate_genome_phylogeny_plot:
+    input:
+        tree_genome = rules.generate_species_tree.output.tree_genome,
+        metadata_formatted = rules.format_metadata.output.metadata_formatted
+    output:
+        tree_genome_plot = 'figs/genome_tree_synonymous_MAC10.png',
+    script:
+        """
+        "../../tree/plot_genome_tree.R"
+        """

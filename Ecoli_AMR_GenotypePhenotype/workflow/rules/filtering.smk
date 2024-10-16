@@ -8,7 +8,7 @@ rule get_good_contigs:
     script:
         "../../popgen_scripts/pan_genome.R"
 
-#filter to onyl biallelic SNPs of 3 common classes
+#filter to onyl biallelic SNPs of 3 common classes on good contigs
 rule filter_biallelic_annotated_snps:
     input:
         vcf = 'vcf_files/annotated_output.vcf.gz',
@@ -61,8 +61,8 @@ rule generate_sfs_input:
         vcf_bi = rules.filter_biallelic_annotated_snps.output.vcf_bi,
         vcf_remoutlier = rules.filter_outlier_samples.output.vcf_outliers_removed
     output:
-        sfs_allsamps = 'vcf_files/annotated_output_biallelic_SFS_counts.txt',
-        sfs_outliers_removed = 'vcf_files/annotated_output_biallelic_SFS_counts_remoutliers.txt'
+        sfs_allsamps = 'vcf_files/annotated_output_biallelic_goodcontigs_SFS_counts.txt',
+        sfs_outliers_removed = 'vcf_files/annotated_output_biallelic_goodcontigs_SFS_counts_remoutliers.txt'
     shell:
         """
         bcftools query  {input.vcf_bi} -f "%CHROM\t%POS\t%ALT\t%AC\t%DP\t%ANN\n" -o {output.sfs_allsamps}
@@ -86,7 +86,7 @@ rule generate_popgen_input:
     input:
         vcf_syn_popgen = rules.generate_synonymous_filtered.output.vcf_syn_popgen
     output:
-        vcf_syn_popgen_subsampled = 'vcf_files/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAC10_refedit_subsample.vcf'
+        vcf_syn_popgen_subsampled = 'tree/alignment/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAC10_refedit_subsample.vcf'
     shell:
         """
         cat <(grep -e '#' {input.vcf_syn_popgen} ) <(grep -Ev '#'  {input.vcf_syn_popgen}| sed -n '0~10p') > {output.vcf_syn_popgen_subsampled}
