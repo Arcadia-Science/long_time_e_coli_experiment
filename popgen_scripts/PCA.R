@@ -6,6 +6,7 @@ library(dplyr)
 library(data.table)
 library(gridExtra)
 library(tidyr)
+library(viridis)
 
 #input_vcf <- "vcf_files/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAF10_refedit_subsample.vcf"
 #input_metadata <- "strains_metadata_phenotypes_full.txt"
@@ -53,7 +54,8 @@ tab <- data.frame(sample.id = pca$sample.id,
 df <- metadata %>% select(sample.id, Isolation.Country, Collection.Year,ref, Other.Typing) %>%
         right_join(.,tab, by = 'sample.id') %>%
                 group_by(Other.Typing) %>% mutate(ntype = n()) %>%
-                mutate(mlst = ifelse(ntype > 49, Other.Typing, NA) ) %>% ungroup(.)
+                mutate(mlst = ifelse(ntype > 49, Other.Typing, NA) ) %>%
+                mutate(mlst = ifelse(mlst == '', NA, mlst)) %>% ungroup(.)
 
 
 
@@ -61,18 +63,37 @@ df <- metadata %>% select(sample.id, Isolation.Country, Collection.Year,ref, Oth
 
 ###########################
 #visualize PCA space with different metadata labels
-pl_ref <- ggplot(df, aes(x=EV1, y=EV2, colour = ref)) + geom_point()
-pl_mlst <-ggplot(df, aes(x=EV1, y=EV2, colour = mlst)) + geom_point()+ stat_ellipse()
-pl_year <-ggplot(df, aes(x=EV1, y=EV2, colour = as.character(Collection.Year))) + geom_point() + labs(colour='Year')
+pl_ref <- ggplot(df, aes(x=EV1, y=EV2, colour = ref)) + geom_point()+
+        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+        scale_colour_manual(values=c('ref' = '#5088C5', 'non-ref' = '#F28360')) + xlab('PC1') + ylab('PC2')
+
+pl_mlst <-ggplot(df, aes(x=EV1, y=EV2, colour = mlst)) + geom_point()+ stat_ellipse()+
+        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+        viridis::scale_color_viridis(discrete = TRUE, option = 'magma') + xlab('PC1') + ylab('PC2')
+
+
+pl_year <-ggplot(df, aes(x=EV1, y=EV2, colour = as.character(Collection.Year))) + geom_point() + labs(colour='Year')+
+        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+        viridis::scale_color_viridis(discrete = TRUE) + xlab('PC1') + ylab('PC2')
 
 #combine plots into one plot
 pl2 <- grid.arrange(pl_ref, pl_year, pl_mlst, ncol=3, nrow =1)
+#ggsave('final_figs/combined_pca.pdf', pl2, width = 18, height = 5.5)
+
+
+#ggsave('final_figs/PCA_ref.pdf', pl_ref, width = 6, height = 5)
+#ggsave('final_figs/PCA_year.pdf', pl_year, width = 6, height = 5)
+#ggsave('final_figs/PCA_mlst.pdf', pl_mlst, width = 7, height = 5)
+
 
 #output figure
 ggsave(pca_fig_file, pl2, width = 21)
 
 
-
+data = . %>% filter(mlst != NA), aes(color = mlst)
 
 
 

@@ -7,3 +7,15 @@
 *.pdf
 *.png
 *.log
+*phy
+tree/*
+plink/*
+*.bed
+*.ped
+*.fam
+*.ld
+*.map
+*.bim
+*.nosex
+*.missnp
+*.rda
