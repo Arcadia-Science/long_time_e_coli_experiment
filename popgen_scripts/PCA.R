@@ -66,22 +66,25 @@ df <- metadata %>% select(sample.id, Isolation.Country, Collection.Year,ref, Oth
 pl_ref <- ggplot(df, aes(x=EV1, y=EV2, colour = ref)) + geom_point()+
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-        scale_colour_manual(values=c('ref' = '#5088C5', 'non-ref' = '#F28360')) + xlab('PC1') + ylab('PC2')
+        scale_colour_manual(labels = c("Non-reference", "Reference"), values = c("#5088C5", "#F28360"))+
+        xlab('PC1') + ylab('PC2')+ labs(color='Pangenome\nreference')
 
 pl_mlst <-ggplot(df, aes(x=EV1, y=EV2, colour = mlst)) + geom_point()+ stat_ellipse()+
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-        viridis::scale_color_viridis(discrete = TRUE, option = 'magma') + xlab('PC1') + ylab('PC2')
+        viridis::scale_color_viridis(discrete = TRUE, option = 'magma') +
+        xlab('PC1') + ylab('PC2')+ labs(color='Phylogroup/MLST')
 
 
 pl_year <-ggplot(df, aes(x=EV1, y=EV2, colour = as.character(Collection.Year))) + geom_point() + labs(colour='Year')+
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black")) +
-        viridis::scale_color_viridis(discrete = TRUE) + xlab('PC1') + ylab('PC2')
+        viridis::scale_color_viridis(discrete = TRUE) +
+        xlab('PC1') + ylab('PC2')+ labs(color='Collection Year')
 
 #combine plots into one plot
 pl2 <- grid.arrange(pl_ref, pl_year, pl_mlst, ncol=3, nrow =1)
-#ggsave('final_figs/combined_pca.pdf', pl2, width = 18, height = 5.5)
+ggsave('final_figs/combined_pca.png', pl2, width = 18, height = 5.5)
 
 
 #ggsave('final_figs/PCA_ref.pdf', pl_ref, width = 6, height = 5)

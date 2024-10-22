@@ -45,7 +45,7 @@ pl1 <- ggplot(data = df3, aes(x = as.factor(within_pheno), y = R2)) +
         geom_boxplot() + facet_wrap(~within_gene)
 
 
-ggsave('figs/geno_pred_LD_tophits.png', pl1)
+#ggsave('figs/geno_pred_LD_tophits.png', pl1)
 
 
 #write.table(df3, 'tables/gwas_presence_absence_complete_bslmm_probit_top10_ld.txt', quote = F, sep = '\t', row.names = F)
@@ -61,13 +61,32 @@ top_hits <- fread('geno_pred/gwas_presence_absence_ALL_bslmm_probit_top_hits.txt
 dfheat_single <- df3 %>%  filter(phenochr1 == 'ampicillin' & phenochr2 == 'ampicillin') %>% select(SNP_A, SNP_B, R2)
 dfheat_mirror <- df3 %>%  filter(phenochr1 == 'ampicillin' & phenochr2 == 'ampicillin') %>% select(SNP_A, SNP_B, R2) %>%
     rename(SNP_B_temp = SNP_A) %>% rename(SNP_A = SNP_B) %>% rename(SNP_B = SNP_B_temp)
+
+
 dfheat <- rbind(dfheat_single, dfheat_mirror) %>%
     left_join(.,top_hits, by = c('SNP_A' = 'rs')) %>% rename(Marker_A = marker_name) %>%
     left_join(.,top_hits, by = c('SNP_B' = 'rs')) %>% rename(Marker_B = marker_name)
 
 
-plheat <- ggplot(data = dfheat, aes(x=Marker_A, y=Marker_B, fill=R2)) + geom_tile() +scale_fill_gradient(low = "white", high = "red")
-ggsave('figs/geno_pred_LD_tophits_heatmap.png', plheat, width = 8, height = 5)
+
+dfheat$Marker_A_ordered <- factor(dfheat$Marker_A, ordered=TRUE, levels = c("Marker 1", "Marker 2", "Marker 3", "Marker 4",
+                                                                            "Marker 5", "Marker 6", "Marker 7", "Marker 8",
+                                                                            "Marker 9", "Marker 10"))
+dfheat$Marker_B_ordered <- factor(dfheat$Marker_B, ordered=TRUE, levels = c("Marker 1", "Marker 2", "Marker 3", "Marker 4",
+                                                                            "Marker 5", "Marker 6", "Marker 7", "Marker 8",
+                                                                            "Marker 9", "Marker 10"))
+
+
+
+plheat <- ggplot(data = dfheat, aes(x=Marker_A_ordered, y=Marker_B_ordered, fill=R2)) +
+        geom_tile() + scale_x_discrete(guide = guide_axis(angle = 45)) +
+        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+        scale_fill_gradientn(limits = c(0,0.75), colours=c("#341E60", "#A96789", "#F5DFB2"))+
+        xlab("First marker") + ylab("Second marker")
+
+
+#ggsave('final_figs/geno_pred_LD_tophits_heatmap.svg', plheat, width = 6.5, height = 5)
 
 ##########################
 #null distribution

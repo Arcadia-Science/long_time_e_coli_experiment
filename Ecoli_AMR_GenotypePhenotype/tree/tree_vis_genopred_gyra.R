@@ -25,11 +25,11 @@ metadata <- metadata %>% group_by(Other.Typing) %>%
 
 
 pl <- ggtree(tree_test,layout='circular') %<+% metadata
-ggsave('figs/test_tree_iqtree_gyra_gamma.png', plot = pl)
+#ggsave('figs/test_tree_iqtree_gyra_gamma.png', plot = pl)
 
 
 pl4 <- pl + geom_tippoint(aes(colour = mlst),size = 0.001) +  theme(legend.position = "none")
-ggsave('figs/test_tree_iqtree_gyra_mlst.png', plot = pl4)
+#ggsave('figs/test_tree_iqtree_gyra_mlst.png', plot = pl4)
 #pl4_2 <- pl + geom_tippoint(aes(colour = mlst),size = 0.001)
 #ggsave('figs/test_tree_mlst_legend.png', plot = pl4_2)
 
