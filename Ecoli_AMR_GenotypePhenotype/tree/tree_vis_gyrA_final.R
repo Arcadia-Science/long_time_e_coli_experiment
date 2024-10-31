@@ -70,7 +70,8 @@ gyra_tree_plot <- gheatmap(pl_base, cip_metdata_full,width=0.2,color = NULL,coln
         values=c("#73B5E3", "#F7B846","#3B9886","#97CD78" , "#B5BEA4", "#F28360", "#5088C5"),  na.value = NA)
 
 
-ggsave('final_figs/iqtree_gyra_3markers.png', plot = gyra_tree_plot)
+ggsave('final_figs/Fig5A_gyrA_tree_500.png', plot = gyra_tree_plot)
+ggsave('final_figs/Fig5A_gyrA_tree_500.svg', plot = gyra_tree_plot)
 
 
 
@@ -99,7 +100,7 @@ pl_effect <- ggplot(plot_markers, aes(x=genotype, y = Resistance)) + geom_boxplo
         panel.background = element_blank(), axis.line = element_line(colour = "black"))+
         xlab('Genotype')+
         scale_x_discrete(labels=c(
-                                "000" = "WT",
+                                "000" = "Ancetral\nstate",
                                 "001" = "parC239",
                                 "010" = "gyrA259",
                                 "100" = "gyrA248",
@@ -108,7 +109,8 @@ pl_effect <- ggplot(plot_markers, aes(x=genotype, y = Resistance)) + geom_boxplo
                                 "111" = "Full stack"
                                 ))
 
-ggsave('final_figs/boxplotciprofloxacin_markers_top3.svg', plot = pl_effect, width = 7, height = 5)
+ggsave('final_figs/Fig5B_boxplot_marker_effects_500.png', plot = pl_effect, width = 7, height = 5)
+ggsave('final_figs/Fig5B_boxplot_marker_effects_500.svg', plot = pl_effect, width = 7, height = 5)
 
 
 

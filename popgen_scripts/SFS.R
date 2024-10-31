@@ -89,4 +89,5 @@ pl_combined <- grid.arrange(pl_sfs,  pl_pres_abs, ncol=2, nrow =1)
 
 ggsave(output_sfs_file,pl_combined, height = 3.5, width = 8)
 
-#ggsave('final_figs/SFS_combined_remoutliers.svg',pl_combined, height = 3.5, width = 8)
+#ggsave('final_figs/Fig2_SFS_700.png',pl_combined, height = 3.5, width = 8)
+#ggsave('final_figs/Fig2_SFS_700.svg',pl_combined, height = 3.5, width = 8)

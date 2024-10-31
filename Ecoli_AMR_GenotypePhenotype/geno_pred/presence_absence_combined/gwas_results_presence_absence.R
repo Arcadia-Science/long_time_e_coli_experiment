@@ -38,9 +38,10 @@ pl1 <- ggplot(data = top_hits, aes(x = rank, y = eff)) +
         geom_line() + geom_point( aes(x = rank, y = eff, colour = type_marker)) +  facet_wrap(~phenotype) +
         xlab('Marker rank') + ylab('Marker effect size') + labs(color='Marker type') +
         scale_x_continuous(breaks = function(rank) unique(floor(pretty(seq(min(rank), (max(rank) + 1) * 1.1)))))+
-        scale_color_manual(labels = c("SNP", "Presence/Absence"), values = c("#5088C5", "#F28360"))
+        scale_color_manual(labels = c("Presence/Absence", "SNP"), values = c("#5088C5", "#F28360"))
 
-ggsave('final_figs/marker_effects.svg', pl1, width = 9, height = 3)
+#ggsave('final_figs/Fig4_marker_effects_700.png', pl1, width = 9, height = 3)
+#ggsave('final_figs/Fig4_marker_effects_700.svg', pl1, width = 9, height = 3)
 
 
 #write.table(top_hits, 'geno_pred/gwas_presence_absence_complete_bslmm_probit_top10.txt', row.names = F, quote = F, sep = '\t')

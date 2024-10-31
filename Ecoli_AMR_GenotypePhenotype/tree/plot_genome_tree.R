@@ -70,7 +70,7 @@ plot_phylogroups <- gheatmap(ggtree(tree_test,layout='circular', size=0.25), met
         geom_cladelabel(node=11297, label="phylogroup F",color="#F898AE",offset=.3,offset.text=.1, hjust=0.8)
 
 
-#ggsave('final_figs/TREETEST.png', plot_phylogroups, width = 8)
+#ggsave('final_figs/genome_trees_mlst.png', plot_phylogroups, width = 8)
 
 
 
@@ -91,7 +91,8 @@ plot_phenotypes <- gheatmap(ggtree(tree_test,layout='circular', size=0.25), meta
 #combine plots into one plot
 plot_trees_all <- grid.arrange(plot_phylogroups, plot_phenotypes, ncol=2, nrow =1)
 
-#ggsave('final_figs/TREETEST.png', plot_trees_all, width = 13)
+#ggsave('final_figs/Fig3_trees_1000.png', plot_trees_all, width = 13)
+#ggsave('final_figs/Fig3_trees_1000.svg', plot_trees_all, width = 13)
 
 
 #output figure

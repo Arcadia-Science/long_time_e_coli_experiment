@@ -76,15 +76,18 @@ pl_mlst <-ggplot(df, aes(x=EV1, y=EV2, colour = mlst)) + geom_point()+ stat_elli
         xlab('PC1') + ylab('PC2')+ labs(color='Phylogroup/MLST')
 
 
-pl_year <-ggplot(df, aes(x=EV1, y=EV2, colour = as.character(Collection.Year))) + geom_point() + labs(colour='Year')+
+pl_year <-ggplot(df, aes(x=EV1, y=EV2, colour = Collection.Year)) + geom_point() + labs(colour='Year')+
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black")) +
-        viridis::scale_color_viridis(discrete = TRUE) +
+        viridis::scale_color_viridis() +
         xlab('PC1') + ylab('PC2')+ labs(color='Collection Year')
 
 #combine plots into one plot
 pl2 <- grid.arrange(pl_ref, pl_year, pl_mlst, ncol=3, nrow =1)
-ggsave('final_figs/combined_pca.png', pl2, width = 18, height = 5.5)
+
+
+ggsave('final_figs/Fig1_PCA_1000.png', pl2, width = 18, height = 5.5)
+ggsave('final_figs/Fig1_PCA_1000.svg', pl2, width = 18, height = 5.5)
 
 
 #ggsave('final_figs/PCA_ref.pdf', pl_ref, width = 6, height = 5)
@@ -96,7 +99,6 @@ ggsave('final_figs/combined_pca.png', pl2, width = 18, height = 5.5)
 ggsave(pca_fig_file, pl2, width = 21)
 
 
-data = . %>% filter(mlst != NA), aes(color = mlst)
 
 
 

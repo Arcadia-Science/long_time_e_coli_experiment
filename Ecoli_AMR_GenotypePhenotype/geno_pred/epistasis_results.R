@@ -3,19 +3,6 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 
-#df <- fread('geno_pred/plink/TESTBED.epi.cc', header = T) %>% arrange(P)
-
-#gene_names <- fread('pangenome/gene_names.txt', fill=TRUE, header = F) %>% rename(chr = V1, gene = V2)
-
-
-#df2 <- df %>% left_join(.,gene_names, by = c('CHR1' = 'chr')) %>%
-#    rename(genechr1 = gene) %>%
-#        left_join(.,gene_names, by = c('CHR2' = 'chr')) %>%
-#            rename(genechr2 = gene)
-
-#head(df2)
-
-
 
 ############
 
@@ -83,10 +70,11 @@ plheat <- ggplot(data = dfheat, aes(x=Marker_A_ordered, y=Marker_B_ordered, fill
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))+
         scale_fill_gradientn(limits = c(0,0.75), colours=c("#341E60", "#A96789", "#F5DFB2"))+
-        xlab("First marker") + ylab("Second marker")
+        xlab("First marker") + ylab("Second marker") + guides(fill=guide_legend(title=expression(LD(~r^2))))
 
 
-#ggsave('final_figs/geno_pred_LD_tophits_heatmap.svg', plheat, width = 6.5, height = 5)
+#ggsave('final_figs/Fig6_LDheatmap_500.png', plheat, width = 6, height = 5)
+#ggsave('final_figs/Fig6_LDheatmap_500.svg', plheat, width = 6, height = 5)
 
 ##########################
 #null distribution
