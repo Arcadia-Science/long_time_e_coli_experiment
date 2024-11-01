@@ -22,10 +22,6 @@ configfile: 'snakemake_config.yaml'
 #### PIPELINE ####
 ##################
 
-# Only ever consider chromosomes in chromosome file
-#wildcard_constraints:
-#    chrom='|'.join([x for x in CHROMOSOMES]),
-#    habitat='|'.join([x for x in HABITATS])
 MAC = [250]
 PHENOTYPES = ['ampicillin','ciprofloxacin', 'trimethoprim.sulfamethoxazole']
 
@@ -33,34 +29,34 @@ PHENOTYPES = ['ampicillin','ciprofloxacin', 'trimethoprim.sulfamethoxazole']
 
 rule all:
    input:
-        'vcf_files/annotated_output.vcf.gz',
-        'figs/genomic_PCA.txt',
-        'figs/SFS_combined_remoutliers.png',
-        'figs/genome_tree_synonymous_MAC10.png',
-        expand("geno_pred/output/gwas_MAC{mac}_{pheno}_bslmm_probit.param.txt", mac=MAC, pheno = PHENOTYPES)
+        '../vcf_files/annotated_output.vcf.gz',
+        '../tree/alignment/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAC10_refedit_subsample.vcf'
+        #'figs/genomic_PCA.txt',
+        #'figs/SFS_combined_remoutliers.png',
+        #'figs/genome_tree_synonymous_MAC10.png',
+        #expand("geno_pred/output/gwas_MAC{mac}_{pheno}_bslmm_probit.param.txt", mac=MAC, pheno = PHENOTYPES)
 
 
 
 rule get_data:
+    conda: 'envs/aws_cli.yaml'
     input:
     output:
-        'vcf_files/annotated_output.vcf.gz',
-        'vcf_files/filtered_output.vcf.gz',
-        'pangenome/pangenome_genomes_SRA_GCA.csv',
-        'pangenome/whole_pan_ecor_presence_absence.csv',
-        'pangenome/whole_pangenome.fasta',
-        'phenotype_matrix/phenotype_matrix_08302024.csv',
-        'phenotype_matrix/SRA_to_genome_name.csv',
-        'strains_metadata.csv',
-        'presence_absence_data/presence_absence_sfs.txt',
-        'presence_absence_data/presence_absence_all.bim',
-        'presence_absence_data/presence_absence_all.bed',
-        'presence_absence_data/presence_absence_all.fam',
-        'presence_absence_data/presence_absence_all.map'
-
-
+        '../vcf_files/annotated_output.vcf.gz',
+        '../vcf_files/filtered_output.vcf.gz',
+        '../pangenome/pangenome_genomes_SRA_GCA.csv',
+        '../pangenome/whole_pan_ecor_presence_absence.csv',
+        '../pangenome/whole_pangenome.fasta',
+        '../phenotype_matrix/phenotype_matrix_08302024.csv',
+        '../phenotype_matrix/SRA_to_genome_name.csv',
+        '../strains_metadata.csv',
+        '../presence_absence_data/presence_absence_sfs.txt',
+        '../presence_absence_data/presence_absence_all.bim',
+        '../presence_absence_data/presence_absence_all.bed',
+        '../presence_absence_data/presence_absence_all.fam',
+        '../presence_absence_data/presence_absence_all.map'
     shell:
-        'aws s3 cp s3://ecoli-pangenomics-data/Ecoli_AMR_GenotypePhenotype/ Ecoli_AMR_GenotypePhenotype --recursive'
+        'aws s3 cp s3://ecoli-pangenomics-data/Ecoli_AMR_GenotypePhenotype/ ../../Ecoli_AMR_GenotypePhenotype --recursive'
 
 #workdir: "path/to/workdir"
 
