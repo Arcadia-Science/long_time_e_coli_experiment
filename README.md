@@ -26,11 +26,11 @@ All dependencies are handled by conda using environments built from yaml files s
 
 
 Analyses are split into 4 main subworkflows in Ecoli_AMR_GenotypePhenotype/workflow/rules
--filtering.smk
+- filtering.smk
 This workflow cleans up the data, removing outlier samples, filtering down to informative sites 
--popgen_analyses.smk
+- popgen_analyses.smk
 This workflow generates some pop-gen visualizations such as a site-frequency spectrum and also constructs phylogenetic trees
--genomic_prediction.smk
+- genomic_prediction.smk
 This workflow runs genomic prediction using GEMMA
 
 
