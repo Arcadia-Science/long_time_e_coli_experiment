@@ -8,3 +8,29 @@ In this repo, we characterize the genomic structure and perform genomic predicti
 
 ## Data
 Phenotypic and Genotypic data on the 7,000 E. coli genomes has previously been [published](https://research.arcadiascience.com/pub/dataset-ecoli-amr-genotype-phenotype/release/1#working-with-a-pangenome) and is available [here](https://zenodo.org/records/12692732)
+
+Additional pre-computed data on presence-absence variation in the dataset is available HERE(ADD ZENODO)
+
+## Installation and Setup
+This repository uses Snakemake, R, and Python.
+Dependency requirements are managed by conda.
+
+
+The bash script 'run_analyses.sh' can be used to initiate installation of miniforge3 (conda) and the main environment containing a snakemake installation, as well as running the snakemake pipeline to generate desired results. 
+
+
+## Basic workflow
+The main snakemake file is found in Ecoli_AMR_GenotypePhenotype/workflow/Snakemake
+This file will initialize downloading all necessary data, as well as trigerring all downstream analyses.
+All dependencies are handled by conda using environments built from yaml files stored in Ecoli_AMR_GenotypePhenotype/workflow/envs
+
+
+Analyses are split into 4 main subworkflows in Ecoli_AMR_GenotypePhenotype/workflow/rules
+-filtering.smk
+This workflow cleans up the data, removing outlier samples, filtering down to informative sites 
+-popgen_analyses.smk
+This workflow generates some pop-gen visualizations such as a site-frequency spectrum and also constructs phylogenetic trees
+-genomic_prediction.smk
+This workflow runs genomic prediction using GEMMA
+
+
