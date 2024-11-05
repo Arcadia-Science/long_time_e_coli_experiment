@@ -35,4 +35,37 @@ This workflow runs genomic prediction using GEMMA
 - `WIP`:
   This workflow runs post-hoc genomic prediction analyses
 
+## Directory Structure
+
+### Data
+- `Ecoli_AMR_GenotypePhenotype/vcf_files`
+Directory for storing genotypic information on SNPs/indels
+
+- `Ecoli_AMR_GenotypePhenotype/presence_absence`
+Directory for storing presence/absence data
+
+- `Ecoli_AMR_GenotypePhenotype/pangenome`
+Directory for storing data related to pangenome reference
+
+- `Ecoli_AMR_GenotypePhenotype/phenotype_matrix`
+Directory for storing data related to AMR phenotypes and assoaciated metadata
+
+
+### Analyses
+
+- `Ecoli_AMR_GenotypePhenotype/workflow/rules/scripts`
+This is where most scripts are stored, generating output such as phylogenies, genomic prediction etc.
+
+- `Ecoli_AMR_GenotypePhenotype/figs`
+Main directory for outputting results that are visualized in plots
+
+- `Ecoli_AMR_GenotypePhenotype/tables`
+Directory for table based results output
+
+- `Ecoli_AMR_GenotypePhenotype/tree`
+Directory for data related to phylogenetic analyses
+
+- `Ecoli_AMR_GenotypePhenotype/geno_pred`
+Directory for data and results from genomic prediction
+
 
