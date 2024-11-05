@@ -11,7 +11,6 @@ out_file <- snakemake@output[[1]]
 df <- fread(input_file)
 
 #funs to clean
- bcftools column names
 colClean_bracket <- function(x){ colnames(x) <- gsub(".*\\]", "", colnames(x)); x }
 colClean_GT     <- function(x){ colnames(x) <- gsub("\\:.*", "", colnames(x)); x }
 convert_numeric <- function(x){ as.numeric(x)}

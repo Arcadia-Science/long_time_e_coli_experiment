@@ -13,7 +13,7 @@ input_presence_absence_sfs_file <- snakemake@input[['presence_absence_input']]
 input_presence_absence_sfs_contigs <- snakemake@input[['presence_absence_loci']]
 
 
-output_sfs_file <- snakemake@input[['sfs_fig']]
+output_sfs_file <- snakemake@output[['sfs_fig']]
 
 
 #########################

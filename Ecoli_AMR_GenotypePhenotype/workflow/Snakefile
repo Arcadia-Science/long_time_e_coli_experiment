@@ -6,16 +6,6 @@
 configfile: 'snakemake_config.yaml'
 
 
-# Load sample sheet
-#SAMPLE_SHEET_DF = pd.read_table(config['samples'], sep='\t')
-
-# Sample and chromosome info
-#SAMPLES = SAMPLE_SHEET_DF['sample'].tolist()
-#HABITATS = SAMPLE_SHEET_DF['site'].unique().tolist()
-#CHROMOSOMES = pd.read_table(config['chromosomes'], header=None).iloc[:,0].tolist()
-
-
-
 
 
 ##################
@@ -30,10 +20,11 @@ PHENOTYPES = ['ampicillin','ciprofloxacin', 'trimethoprim.sulfamethoxazole']
 rule all:
    input:
         '../vcf_files/annotated_output.vcf.gz',
-        '../tree/alignment/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAC10_refedit_subsample.vcf'
-        #'figs/genomic_PCA.txt',
-        #'figs/SFS_combined_remoutliers.png',
-        #'figs/genome_tree_synonymous_MAC10.png',
+        '../tree/alignment/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAC10_refedit_subsample.vcf',
+        '../figs/genomic_PCA.png',
+        '../figs/SFS_combined_remoutliers.png',
+        '../tree/alignment/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAC10_refedit_subsample.min4.phy',
+        '../figs/genome_tree_synonymous_MAC10.png',
         #expand("geno_pred/output/gwas_MAC{mac}_{pheno}_bslmm_probit.param.txt", mac=MAC, pheno = PHENOTYPES)
 
 

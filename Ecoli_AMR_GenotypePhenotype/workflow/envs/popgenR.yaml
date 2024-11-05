@@ -1,8 +1,8 @@
 name: popgenR
 channels:
-  - bioconda
   - defaults
   - anaconda
+  - bioconda
   - bioconda/label/cf201901
   - conda-forge
 dependencies:
@@ -12,6 +12,8 @@ dependencies:
   - _sysroot_linux-64_curr_repodata_hack=3=h69a702a_16
   - bcftools=1.5=3
   - binutils_impl_linux-64=2.40=ha1999f0_7
+  - bioconductor-gdsfmt=1.38.0=r43hf17093f_1
+  - bioconductor-snprelate=1.36.0=r43hf17093f_1
   - bwidget=1.9.14=ha770c72_1
   - bzip2=1.0.8=h4bc722e_7
   - c-ares=1.33.1=heb4867d_0

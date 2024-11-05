@@ -86,17 +86,13 @@ pl_year <-ggplot(df, aes(x=EV1, y=EV2, colour = Collection.Year)) + geom_point()
 pl2 <- grid.arrange(pl_ref, pl_year, pl_mlst, ncol=3, nrow =1)
 
 
-ggsave('final_figs/Fig1_PCA_1000.png', pl2, width = 18, height = 5.5)
-ggsave('final_figs/Fig1_PCA_1000.svg', pl2, width = 18, height = 5.5)
+#ggsave('figs/Fig1_PCA_1000.png', pl2, width = 18, height = 5.5)
+#ggsave('figs/Fig1_PCA_1000.svg', pl2, width = 18, height = 5.5)
 
-
-#ggsave('final_figs/PCA_ref.pdf', pl_ref, width = 6, height = 5)
-#ggsave('final_figs/PCA_year.pdf', pl_year, width = 6, height = 5)
-#ggsave('final_figs/PCA_mlst.pdf', pl_mlst, width = 7, height = 5)
 
 
 #output figure
-ggsave(pca_fig_file, pl2, width = 21)
+ggsave(pca_fig_file, pl2,  width = 18, height = 5.5)
 
 
 
