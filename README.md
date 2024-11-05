@@ -20,9 +20,9 @@ The bash script `run_analyses.sh` can be used to initiate installation of minifo
 
 
 ## Basic workflow
-The main snakemake file is found in Ecoli_AMR_GenotypePhenotype/workflow/Snakemake
+The main snakemake file is found in `Ecoli_AMR_GenotypePhenotype/workflow/Snakemake`
 This file will initialize downloading all necessary data, as well as trigerring all downstream analyses.
-All dependencies are handled by conda using environments built from yaml files stored in Ecoli_AMR_GenotypePhenotype/workflow/envs
+All dependencies are automiatically handled by conda using environments built from yaml files stored in Ecoli_AMR_GenotypePhenotype/workflow/envs
 
 
 Analyses are split into 4 main subworkflows in Ecoli_AMR_GenotypePhenotype/workflow/rules
