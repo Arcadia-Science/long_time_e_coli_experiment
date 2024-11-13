@@ -89,6 +89,4 @@ rule generate_genome_phylogeny_plot:
     output:
         tree_genome_plot = '../figs/genome_tree_synonymous_MAC10.png',
     script:
-        """
         "scripts/plot_genome_tree.R"
-        """

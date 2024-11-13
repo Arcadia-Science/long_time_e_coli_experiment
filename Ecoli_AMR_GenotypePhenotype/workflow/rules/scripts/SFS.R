@@ -33,9 +33,8 @@ df <- df %>% mutate(annot = ifelse(grepl('HIGH', V6), 'LOF',
 #calculate numbers for SFS bins and calculate frequency for each type of site
 sfs <- df %>% group_by(annot) %>%
         mutate(countannot = n()) %>%
-            group_by(annot, V4) %>%
-            summarize(AF = n()/countannot,
-                      AC = n()) %>% filter(V4 > 0)
+            group_by(annot, V4,countannot) %>%
+            summarize(AC = n()) %>% filter(V4 > 0) %>% mutate(AF = AC/countannot)
 
 
 
