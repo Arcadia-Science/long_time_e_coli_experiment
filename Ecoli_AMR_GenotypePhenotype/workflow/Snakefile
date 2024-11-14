@@ -33,7 +33,9 @@ rule all:
         '../figs/gwas_tophits_effects.png',
         '../tree/alignment/gyrA_remoutliers_edited.min4.phy.treefile',
         '../geno_pred/gwas_top10_marker_genotypes.txt',
-        '../figs/gyrA_tree_markers.png'
+        '../figs/gyrA_tree_markers.png',
+        '../tree/alignment/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAC10_refedit_subsample.min4.phy.timetree.nwk',
+        '../tables/corHMM_ciprofloxacin_markers.RDS'
 
 
 

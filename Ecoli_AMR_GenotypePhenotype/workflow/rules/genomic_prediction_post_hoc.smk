@@ -95,3 +95,33 @@ rule plot_ciprofloxacin_posthoc_results:
         cipro_marker_logistic_regression = '../tables/logistic_regression_ciprofloxacin.txt'
     script:
         "scripts/ciprofloxacin_posthoc_analyses.R"
+
+
+#time calibration
+rule time_calibrate_species_tree:
+    conda: '../envs/popgenR.yaml'
+    input:
+        alignment_genome = rules.generate_wg_alignment.output.alignment_genome,
+        uncalibrated_tree = rules.generate_species_tree.output.tree_genome,
+        time_calibration_data = rules.format_metadata.output.time_calibration_data
+    output:
+        calibrated_tree_genome = '../tree/alignment/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAC10_refedit_subsample.min4.phy.timetree.nwk'
+    shell:
+        """
+        iqtree -s {input.alignment_genome} \
+        --date {input.time_calibration_data} -te {input.uncalibrated_tree} -m GTR+ASC --redo-tree
+        """
+
+
+
+
+#run corHMM
+rule run_corHMM_ciprofloxacin_markers:
+    conda: '../envs/popgenR.yaml'
+    input:
+        gyrA_tree_time_calibrated = rules.time_calibrate_species_tree.output.calibrated_tree_genome,
+        marker_genotypes = rules.filter_gwas_top10_marker_genotypes.output.gts_gwas_top10_markers
+    output:
+        corhmm_ciprofloxaxin_markers = '../tables/corHMM_ciprofloxacin_markers.RDS'
+    script:
+        "scripts/ciprofloxacin_corhmm.R"
