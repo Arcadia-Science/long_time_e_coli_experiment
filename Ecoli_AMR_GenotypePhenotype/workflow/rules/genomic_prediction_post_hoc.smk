@@ -66,7 +66,7 @@ rule generate_gyrA_tree:
         """
 
 
-
+#SNPs only
 rule filter_gwas_top10_marker_genotypes:
     conda: '../envs/bcf.yaml'
     input:
@@ -125,3 +125,36 @@ rule run_corHMM_ciprofloxacin_markers:
         corhmm_ciprofloxaxin_markers = '../tables/corHMM_ciprofloxacin_markers.RDS'
     script:
         "scripts/ciprofloxacin_corhmm.R"
+
+
+
+#plink calculate LD
+rule plink_calculate_ld_gwas_markers:
+    conda: '../envs/popgenR.yaml'
+    input:
+        input_bed = rules.merge_plink_input.output.combined_bed,
+        gwas_top10_plink_sites = rules.plot_gwas_results.output.gwas_top10_plink_sites,
+    output:
+        output_bed_tophits = "../geno_pred/plink/gwas_MAC{mac}_bslmm_probit_top10.bed",
+        plink_ld = "../geno_pred/plink/gwas_MAC{mac}_bslmm_probit_top10.ld"
+    shell:
+        """
+        plink --bfile ../geno_pred/plink/annotated_output_MAC{wildcards.mac}_presence_absence  --make-bed --allow-extra-chr \
+        --extract range  {input.gwas_top10_plink_sites} \
+        --out ../geno_pred/plink/gwas_MAC{wildcards.mac}_bslmm_probit_top10
+
+        plink --bfile ../geno_pred/plink/gwas_MAC{wildcards.mac}_bslmm_probit_top10 --r2 --allow-extra-chr \
+        --ld-window-r2 0 --inter-chr --out ../geno_pred/plink/gwas_MAC{wildcards.mac}_bslmm_probit_top10
+        """
+
+
+#generate LD heatmap for ampicillin top10 markers
+rule ld_heatmap_ampicillin_markers:
+    conda: '../envs/popgenR.yaml'
+    input:
+        ld_data = expand("../geno_pred/plink/gwas_MAC{mac}_bslmm_probit_top10.ld", mac=MAC),
+        top_hits = rules.plot_gwas_results.output.gwas_top10_table
+    output:
+        ld_heatmap_figure = '../figs/ampicillin_top10markers_ld_heatmap.png'
+    script:
+        "scripts/ld_heatmap_genopred.R"
