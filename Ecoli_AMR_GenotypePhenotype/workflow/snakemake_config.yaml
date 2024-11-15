@@ -1,8 +1,0 @@
-# Sample IDs as list
-samples: ../resources/glue_pc_sampleSheet.txt
-chromosomes: ../resources/chromosome_file.txt
-gff: ../resources/TrR.v5.renamed_reformated.gtf.gz
-
-# File Path prefixes
-vcf_prefix: /vcf_files
-pangenome_prefix: /pangenome
