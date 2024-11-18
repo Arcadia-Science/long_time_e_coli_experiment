@@ -17,7 +17,7 @@ output_sfs_file <- snakemake@output[['sfs_fig']]
 
 
 #########################
-#bi allelic SNP SFS
+#bi-allelic SNP SFS
 
 #df <- read.table('vcf_files/annotated_output_biallelic_goodcontigs_SFS_counts_remoutliers.txt')
 
@@ -71,7 +71,7 @@ df2 <- df_pa %>% select(V1, present, absent)
 df2$total <- df2$present + df2$absent
 table(df2$total)
 
-#plot presence absence
+#plot presence absence frequency
 pl_pres_abs <- ggplot(df2, aes(x=present)) + geom_histogram(fill = '#7A77AB') +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
     panel.background = element_blank(), axis.line = element_line(colour = "black")) +

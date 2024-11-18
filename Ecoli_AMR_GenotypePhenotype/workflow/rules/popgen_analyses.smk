@@ -18,20 +18,20 @@ rule format_metadata:
 
 
 
-#run PCA, generate PCA plots and multinomial models of PCA vs metadata features like country/year of isolation etc.
+#run genomic PCA, generate PCA plots and multinomial models of PCA vs metadata features like country/year of isolation etc.
 rule genotypic_PCA:
     conda: '../envs/popgenR.yaml'
     input:
         popgen_syn_vcf = rules.generate_popgen_input.output.vcf_syn_popgen_subsampled,
         metadata_formatted = rules.format_metadata.output.metadata_formatted
     output:
-        pca_fig = '../figs/genomic_PCA.png',
+        pca_fig = '../figs/Fig2_genomic_PCA.png',
         pca_model_output = '../tables/PCA_multinomial_model_fits.txt'
     script:
         "scripts/PCA.R"
 
 
-#plot SFS
+#generate site frequency spectrum plot
 rule generate_sfs_plots:
     conda: '../envs/popgenR.yaml'
     input:
@@ -39,7 +39,7 @@ rule generate_sfs_plots:
         presence_absence_input = '../presence_absence_data/presence_absence_sfs.txt',
         presence_absence_loci = '../presence_absence_data/presence_absence_all.bim'
     output:
-        sfs_fig = '../figs/SFS_combined_remoutliers.png'
+        sfs_fig = '../figs/Fig1_SFS_combined_remoutliers.png'
     script:
         "scripts/SFS.R"
 
@@ -55,7 +55,7 @@ rule clone_vcf2phylip:
         """
 
 
-#generate alignment from vcf
+#generate alignment from vcf for tree construction
 rule generate_wg_alignment:
     input:
         '../vcf2phylip/vcf2phylip.py',
@@ -80,13 +80,13 @@ rule generate_species_tree:
         """
 
 
-#generate tree plots
+#generate species tree plots
 rule generate_genome_phylogeny_plot:
     conda: '../envs/popgenR.yaml'
     input:
         tree_genome = rules.generate_species_tree.output.tree_genome,
         metadata_formatted = rules.format_metadata.output.metadata_formatted
     output:
-        tree_genome_plot = '../figs/genome_tree_synonymous_MAC10.png',
+        tree_genome_plot = '../figs/Fig3_genome_tree_synonymous_MAC10.png',
     script:
         "scripts/plot_genome_tree.R"

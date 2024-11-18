@@ -1,18 +1,12 @@
-###############
-#### SETUP ####
-###############
-
-# Defailt configfile. Can be changed at command-line (--configfile)
-configfile: 'snakemake_config.yaml'
-
-
 
 
 ##################
 #### PIPELINE ####
 ##################
 
+#minor allele count cutoffs for genomic prediction, pub uses 250
 MAC = [250]
+#list of phenotypes to run genomic prediction on, 'ampicillin','ciprofloxacin', 'trimethoprim.sulfamethoxazole' used in pub
 PHENOTYPES = ['ampicillin','ciprofloxacin', 'trimethoprim.sulfamethoxazole']
 
 
@@ -20,28 +14,21 @@ PHENOTYPES = ['ampicillin','ciprofloxacin', 'trimethoprim.sulfamethoxazole']
 rule all:
    input:
         '../vcf_files/annotated_output.vcf.gz',
-        #'../tree/alignment/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAC10_refedit_subsample.vcf',
-        '../figs/genomic_PCA.png',
-        '../figs/SFS_combined_remoutliers.png',
-        '../figs/genome_tree_synonymous_MAC10.png',
-        #expand("../geno_pred/plink/annotated_output_MAC{mac}_presence_absence_{pheno}.fam", mac=MAC, pheno = PHENOTYPES),
-        #expand("../geno_pred/output/annotated_output_MAC{mac}.cXX.txt", mac=MAC),
-        #expand("../geno_pred/plink/annotated_output_MAC{mac}_presence_absence_{pheno}.bed", mac=MAC, pheno = PHENOTYPES),
+        '../figs/Fig1_SFS_combined_remoutliers.png',
+        '../figs/Fig2_genomic_PCA.png',
+        '../figs/Fig3_genome_tree_synonymous_MAC10.png',
         expand("../geno_pred/output/gwas_MAC{mac}_{pheno}_bslmm_probit.param.txt", mac=MAC, pheno = PHENOTYPES),
         expand("../geno_pred/output/gwas_MAC{mac}_bslmm_probit_combined.param.txt", mac=MAC),
-        #"../pangenome/gene_names.txt",
-        '../figs/gwas_tophits_effects.png',
-        #'../tree/alignment/gyrA_remoutliers_edited.min4.phy.treefile',
-        #'../geno_pred/gwas_top10_marker_genotypes.txt',
-        '../figs/gyrA_tree_markers.png',
-        #'../tree/alignment/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAC10_refedit_subsample.min4.phy.timetree.nwk',
+        '../figs/Fig4_gwas_tophits_effects.png',
+        '../figs/Fig5a_gyrA_tree_markers.png',
+        '../figs/Fig5b_Boxplot_ciprofloxacin_marker_effects.png',
         '../tables/corHMM_ciprofloxacin_markers.RDS',
-        #expand("../geno_pred/plink/gwas_MAC{mac}_bslmm_probit_top10.ld", mac=MAC),
-        '../figs/ampicillin_top10markers_ld_heatmap.png'
+        '../figs/Fig6_ampicillin_top10markers_ld_heatmap.png'
 
 
 
-
+#download genomic and phenotypic data from A3
+#TODO redirect to zenodo
 rule get_data:
     conda: 'envs/aws_cli.yaml'
     input:
@@ -62,7 +49,6 @@ rule get_data:
     shell:
         'aws s3 cp s3://ecoli-pangenomics-data/Ecoli_AMR_GenotypePhenotype/ ../../Ecoli_AMR_GenotypePhenotype --recursive'
 
-#workdir: "path/to/workdir"
 
 # Snakefiles with rules for particular pieces of the pipeline
 # See Snakefiles for details

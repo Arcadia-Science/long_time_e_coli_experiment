@@ -30,17 +30,18 @@ gene_names <- fread(input_gene_name , fill=TRUE, header = F) %>% rename(chr = V1
 
 
 
-#merge gwas results to gene names
+#merge genomic prediction results to gene names
 df  <- df %>% arrange(-gamma) %>% rename_at(ncol(df), ~"phenotype" ) %>% left_join(.,gene_names)
 
 
 #calculate absolute effect size and sort markers from largest effect to smallest, then label presence/absence loci vs. SNPs based on bogus position coordinate 696969
+#effect size estimate is alpha + beta*gamma as per GEMMA recommendation
 df <- df %>% mutate(eff =  abs(beta*gamma + alpha))  %>% arrange(-eff) %>%
         mutate (type_marker = ifelse(ps == 696969, "pres_abs","snp"))
 
 
 
-#filter down to top 10 markers (by effect size) per phenotype
+#filter down to top 10 markers (by absolute effect size) per phenotype
 top_hits <- df %>% group_by(phenotype) %>%
     mutate(rank = rank(-eff))%>%
     group_by(phenotype, type_marker) %>%
@@ -70,7 +71,7 @@ ggsave(output_tophits_fig, pl1, width = 9, height = 3)
 write.table(top_hits, gwas_top10_table, row.names = F, quote = F, sep = '\t')
 
 
-#output sites for plink sibsetting
+#output sites for plink subsetting of top 10 markers
 plink_sites <- top_hits %>% select(chr, ps, phenotype)%>%
         mutate(ps2 = ps, rangeid = paste0(phenotype, ps)) %>%
         select(chr, ps, ps2, rangeid)
@@ -78,6 +79,6 @@ plink_sites <- top_hits %>% select(chr, ps, phenotype)%>%
 write.table(plink_sites, gwas_top10_plink_sites, row.names = F, quote = F, sep = '\t')
 
 
-#output for bcftools subsetting
+#output sites for bcftools subsetting of top 10 markers
 bcftools_sites <- top_hits %>% select(chr, ps)
 write.table(bcftools_sites, gwas_top10_sites, row.names = F, quote = F, sep = '\t', col.names = F)

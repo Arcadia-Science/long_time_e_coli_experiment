@@ -7,7 +7,7 @@ mkdir figs
 mkdir tables
 
 #wd of snakemake pipeline
-cd l/workflow
+cd workflow
 
 #setup and activate conda environment for snakemake to run
 conda env create --file=envs/snakemake.yaml

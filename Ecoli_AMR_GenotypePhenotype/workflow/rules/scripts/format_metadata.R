@@ -66,7 +66,9 @@ time_calibration <- full_pheno_metadata %>% select(sample.id, Collection.Year) %
 
 ##########################
 #write output files
-
+#full metadata set plus phenotypes
+#list of samples
+#list of samples and year of sampling if available for downstream time calibration of phylogeny
 
 write.table(full_pheno_metadata, full_pheno_metadata_file, sep = '\t', row.names = F, quote = F)
 write.table(samplist, samplist_file, sep = '\t', row.names = F, quote = F, col.names=F)

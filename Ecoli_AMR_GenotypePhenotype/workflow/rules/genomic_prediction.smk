@@ -6,7 +6,7 @@ wildcard_constraints:
 
 
 
-#filter variants
+#filter variants based on MAC cutoff defined
 rule filter_variants_genopred:
     conda: '../envs/bcf.yaml'
     input:
@@ -23,7 +23,7 @@ rule filter_variants_genopred:
 
 
 
-#generate plink files for SNP dataset
+#generate plink files for MAC filtered SNP dataset
 rule plink_generate_snp:
     conda: '../envs/popgenR.yaml'
     input:
@@ -39,7 +39,7 @@ rule plink_generate_snp:
         """
 
 
-#prepare SNP plink files for merging to presence absence data
+#prepare SNP plink files for merging to presence absence data by adding a marker ID
 rule edit_plink_siteid_snp:
     conda: '../envs/popgenR.yaml'
     input:
@@ -54,7 +54,7 @@ rule edit_plink_siteid_snp:
 
 
 #prepare presence absence plink files for merging, need unique ID's for all sites for plink merge
-#first adds bogus position, then generates a unique ID based on contig names and 'presabs' string
+#first adds bogus position (69696969), then generates a unique ID based on contig names and 'presabs' string
 #copy over bed and fam, they don't need editing but to keep new files together
 rule edit_plink_siteid_presence_absence:
     conda: '../envs/popgenR.yaml'
@@ -82,7 +82,7 @@ rule edit_plink_siteid_presence_absence:
 
 
 
-
+#merge the SNP bed and presence/absence marker bed files
 rule merge_plink_input:
     conda: '../envs/popgenR.yaml'
     input:
@@ -106,11 +106,12 @@ rule merge_plink_input:
 
 
 
-#generate phenotype files
+#generate phenotype plink files (.fam) by adding susceptible(0) and resistant/intermediate(1) column from metadata file
 rule edit_plink_fam:
     conda: '../envs/popgenR.yaml'
     input:
-        rules.merge_plink_input.output.combined_fam
+        rules.merge_plink_input.output.combined_fam,
+        rules.format_metadata.output.metadata_formatted
     output:
         "../geno_pred/plink/annotated_output_MAC{mac}_presence_absence_{pheno}.fam"
     params:
@@ -122,7 +123,7 @@ rule edit_plink_fam:
 
 
 
-#generate GEMMA relatedness matrix
+#generate GEMMA relatedness matrix to save time since same matrix will be used for all phenotypes
 rule run_GEMMA_relmatrix:
     conda: '../envs/popgenR.yaml'
     input:
@@ -141,7 +142,7 @@ rule run_GEMMA_relmatrix:
 
 
 
-#create temp gemma input files
+#create temporary phenotype specific (non fam) gemma input files
 rule GEMMA_temp_files:
     conda: '../envs/popgenR.yaml'
     input:
@@ -158,7 +159,7 @@ rule GEMMA_temp_files:
         cp ../geno_pred/plink/annotated_output_MAC{wildcards.mac}_presence_absence.bim ../geno_pred/plink/annotated_output_MAC{wildcards.mac}_presence_absence_{wildcards.pheno}.bim
         """
 
-#run GEMMA genopred probit
+#run genomic prediction GEMMA genopred probit model
 rule run_GEMMA_gwas_probit:
     conda: '../envs/popgenR.yaml'
     input:

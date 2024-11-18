@@ -45,11 +45,10 @@ metadata <- metadata %>%
 #phylogroup
 metadata_subset_phylo <- metadata %>% ungroup(.) %>% select( mlst) %>%
         mutate(mlst = as.factor(mlst)) %>% data.frame(.)
-
+#add sample names as rownames to allow for plotting of metadata on tree
 rownames(metadata_subset_phylo) <- metadata$taxa
 
-#mlst plus clade labels
-#mlst plus clade labels
+#mlst/phylogroup clade labels
 mlst_colours <- c('phylogroup:A' = '#73B5E3',
                  'phylogroup:B2' = '#7A77AB',
                  'phylogroup:D' = '#97CD78',
@@ -61,7 +60,7 @@ mlst_colours <- c('phylogroup:A' = '#73B5E3',
                  'mlst:73' = '#C85152',
                  'mlst:95' = '#8A99AD'
                  )
-
+#plot species tree with clade labels
 plot_phylogroups <- gheatmap(ggtree(tree_test,layout='circular', size=0.25), metadata_subset_phylo,width=0.2,color = NULL,font.size=0) +
         theme(legend.position = "right") + guides(fill=guide_legend(title="Phylogroup/MLST")) +
         scale_fill_manual(values= mlst_colours, na.translate = F)+
@@ -75,19 +74,19 @@ plot_phylogroups <- gheatmap(ggtree(tree_test,layout='circular', size=0.25), met
 
 
 ###########
-#antibiotics
+#select specific antibiotic resistance phenotypes to plot from metadata, convert to factor
 metadata_subset <- metadata %>% ungroup(.) %>% select( ciprofloxacin, ampicillin, trimethoprim.sulfamethoxazole) %>%
         mutate_if(is.character, as.factor) %>% data.frame(.)
 
+#add sample names as rownames to allow for plotting of metadata on tree
 rownames(metadata_subset) <- metadata$taxa
 
-#focal AMR phenotype states
+#plot tree with focal resistance phenotypes painted on
 plot_phenotypes <- gheatmap(ggtree(tree_test,layout='circular', size=0.25), metadata_subset,width=0.3,color = NULL,colnames_angle=45, font.size=3) +
     viridis::scale_fill_viridis(discrete = TRUE, na.translate = F)+ guides(fill=guide_legend(title="AMR phenotype"))
 
 
 ###########
-#combine plots
 #combine plots into one plot
 plot_trees_all <- grid.arrange(plot_phylogroups, plot_phenotypes, ncol=2, nrow =1)
 

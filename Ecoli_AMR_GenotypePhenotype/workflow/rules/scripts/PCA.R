@@ -23,7 +23,7 @@ pca_model_output_file <- snakemake@output[['pca_model_output']]
 
 
 ###########################
-#create temporary gds file
+#create temporary gds file from vcf
 snpgdsVCF2GDS(input_vcf, "test.gds", method="biallelic.only")
 
 #read temp gds file
@@ -36,10 +36,10 @@ metadata <- fread(input_metadata)
 
 
 ###########################
-#run pca on variants
+#run genomic pca on variants
 pca <- snpgdsPCA(genofile, num.thread=2, autosome.only = F)
 
-#extract eigencectors
+#extract eigenvectors
 tab <- data.frame(sample.id = pca$sample.id,
                     EV1 = pca$eigenvect[,1], # the first eigenvector
                     EV2 = pca$eigenvect[,2],  # the second eigenvector etc.
@@ -63,19 +63,20 @@ df <- metadata %>% select(sample.id, Isolation.Country, Collection.Year,ref, Oth
 
 ###########################
 #visualize PCA space with different metadata labels
+#label of whether a sample is in pangenome reference or not
 pl_ref <- ggplot(df, aes(x=EV1, y=EV2, colour = ref)) + geom_point()+
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))+
         scale_colour_manual(labels = c("Non-reference", "Reference"), values = c("#5088C5", "#F28360"))+
         xlab('PC1') + ylab('PC2')+ labs(color='Pangenome\nreference')
-
+#mlst label
 pl_mlst <-ggplot(df, aes(x=EV1, y=EV2, colour = mlst)) + geom_point()+ stat_ellipse()+
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))+
         viridis::scale_color_viridis(discrete = TRUE, option = 'magma') +
         xlab('PC1') + ylab('PC2')+ labs(color='Phylogroup/MLST')
 
-
+#collection year label
 pl_year <-ggplot(df, aes(x=EV1, y=EV2, colour = Collection.Year)) + geom_point() + labs(colour='Year')+
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black")) +
