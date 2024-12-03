@@ -2,7 +2,7 @@
 #curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 
 #main wd of projectm make output directories for pipeline to run
-cd long_time_e_coli_experiment/Ecoli_AMR_GenotypePhenotype
+cd Ecoli_AMR_GenotypePhenotype
 mkdir figs
 mkdir tables
 
