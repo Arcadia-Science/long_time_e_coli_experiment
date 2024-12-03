@@ -9,10 +9,6 @@ library(gridExtra)
 
 
 
-#tree_test <- read.newick("tree/alignment_remoutliers_syn_MAC10/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAF10_refedit_subsample.min4.phy.treefile")
-#metadata <- fread("strains_metadata_phenotypes_full.txt")
-
-
 ###########################
 tree_file <- snakemake@input[['tree_genome']]
 metadata_file <- snakemake@input[['metadata_formatted']]
@@ -69,8 +65,6 @@ plot_phylogroups <- gheatmap(ggtree(tree_test,layout='circular', size=0.25), met
         geom_cladelabel(node=11297, label="phylogroup F",color="#F898AE",offset=.3,offset.text=.1, hjust=0.8)
 
 
-#ggsave('final_figs/genome_trees_mlst.png', plot_phylogroups, width = 8)
-
 
 
 ###########
@@ -89,10 +83,6 @@ plot_phenotypes <- gheatmap(ggtree(tree_test,layout='circular', size=0.25), meta
 ###########
 #combine plots into one plot
 plot_trees_all <- grid.arrange(plot_phylogroups, plot_phenotypes, ncol=2, nrow =1)
-
-#ggsave('final_figs/Fig3_trees_1000.png', plot_trees_all, width = 13)
-#ggsave('final_figs/Fig3_trees_1000.svg', plot_trees_all, width = 13)
-
 
 #output figure
 ggsave(tree_fig_file, plot_trees_all, width = 13)

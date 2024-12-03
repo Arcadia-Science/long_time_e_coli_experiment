@@ -8,10 +8,6 @@ library(treeio)
 library(corHMM)
 
 
-#time_calibrated_tree <- read.newick("tree/alignment/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAC10_refedit_subsample.min4.phy.timetree.nwk")
-#geno <- fread('geno_pred/gwas_top10_marker_genotypes.txt')
-
-
 #########
 #snakemake file args
 time_calibrated_tree_file <- snakemake@input[["gyrA_tree_time_calibrated"]]

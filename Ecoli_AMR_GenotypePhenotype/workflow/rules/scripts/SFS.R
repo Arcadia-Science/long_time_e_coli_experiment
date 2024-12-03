@@ -18,10 +18,6 @@ output_sfs_file <- snakemake@output[['sfs_fig']]
 
 #########################
 #bi-allelic SNP SFS
-
-#df <- read.table('vcf_files/annotated_output_biallelic_goodcontigs_SFS_counts_remoutliers.txt')
-
-
 df <- read.table(input_sfs_file)
 
 #simplify SNPeff annotation
@@ -53,10 +49,6 @@ pl_sfs <- ggplot(sfs, aes(x=V4, y=AF, colour = annot)) +
 #########################
 #presence_absence SFS
 
-#sfs <- fread('presence_absence_data/presence_absence_sfs.txt')%>% select(-contains("V"))
-#chroms <- fread('presence_absence_data/presence_absence_all.bim') %>% select(V1)
-
-
 #read in table of presence absence calls, and name of contigs (not strictly needed for plot but nice to have)
 sfs <- fread(input_presence_absence_sfs_file)%>% select(-contains("V"))
 chroms <- fread(input_presence_absence_sfs_contigs) %>% select(V1)
@@ -78,15 +70,9 @@ pl_pres_abs <- ggplot(df2, aes(x=present)) + geom_histogram(fill = '#7A77AB') +
     xlab('Contig Occurence') + ylab('Count')
 
 
-
-
 #########################
 #save plot
-
 
 pl_combined <- grid.arrange(pl_sfs,  pl_pres_abs, ncol=2, nrow =1)
 
 ggsave(output_sfs_file,pl_combined, height = 3.5, width = 8)
-
-#ggsave('final_figs/Fig2_SFS_700.png',pl_combined, height = 3.5, width = 8)
-#ggsave('final_figs/Fig2_SFS_700.svg',pl_combined, height = 3.5, width = 8)

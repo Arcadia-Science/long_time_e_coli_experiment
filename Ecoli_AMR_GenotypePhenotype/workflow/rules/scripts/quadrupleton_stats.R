@@ -3,7 +3,6 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
-#df <- fread('../vcf_files/annotated_output_biallelic_goodcontigs_synonymous_quads_geno.txt')
 input_file <- snakemake@input[[1]]
 out_file <- snakemake@output[[1]]
 
@@ -30,4 +29,3 @@ outlier_samples <- df3 %>% as.data.frame(.) %>% filter(`.` > 500) %>% tibble:::r
 
 write.table(outlier_samples, out_file, quote = F, col.names = F, row.names = F, sep = '\t' )
 
-#write.table(outlier_samples, 'pangenome/outlier_samples.txt', quote = F, col.names = F, row.names = F, sep = '\t' )

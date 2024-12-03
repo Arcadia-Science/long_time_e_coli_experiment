@@ -9,9 +9,6 @@ library(ggnewscale)
 
 
 
-#gyrA_tree<- read.newick ("../tree/alignment/gyrA_remoutliers_edited.min4.phy.treefile")
-#metadata <- fread("../strains_metadata_phenotypes_full.txt")
-#geno <- fread('../geno_pred/gwas_top10_marker_genotypes.txt')
 
 #########
 #snakemake file args

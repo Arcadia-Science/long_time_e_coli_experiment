@@ -16,7 +16,7 @@ This repository uses Snakemake, R, and Python.
 Dependency requirements are managed by conda.
 
 
-The bash script `run_analyses.sh` can be used to initiate installation of miniforge3 (conda) and the main environment containing a snakemake installation, as well as running the snakemake pipeline to generate desired results.
+The bash script `run_analyses.sh` can be used to initiate installation of miniforge3 (conda) and the main environment containing a snakemake installation, as well as running the snakemake pipeline to generate desired results. By default miniforge3 installation is commented out on the first lines of the script, if conda needs to be installed, uncomment these lines prior to running script/workflow. You may have to restart teminral after conda installation for conda to properly initialise for the first time. 
 
 
 ## Basic workflow

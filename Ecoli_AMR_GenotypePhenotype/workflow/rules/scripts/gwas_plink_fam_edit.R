@@ -7,14 +7,10 @@ input_file <- snakemake@input[[1]]
 metadata_pheno_file <- snakemake@input[[2]]
 pheno_select <- snakemake@params[[1]]
 
-#fam <- fread('plink/annotated_output_MAF250.fam') %>% rename(sample.id = V1 )
-#df <- fread('../strains_metadata_phenotypes_full.txt')
-
 
 print(pheno_select) #print focal phenotype
 df <- fread(metadata_pheno_file) #read in metadata + phenotypes
 fam <- fread(input_file) %>% rename(sample.id = V1 ) #read in plink fam file with no phenotypes
-
 
 
 phenos <- df %>% select(one_of('sample.id' ,pheno_select)) #select focal phenotype and sample ID from metadata

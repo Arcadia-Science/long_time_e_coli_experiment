@@ -14,20 +14,9 @@ gwas_top10_plink_sites <- snakemake@output[['gwas_top10_plink_sites']]
 gwas_top10_sites <- snakemake@output[['gwas_top10_sites']]
 
 
-
-
 #read in gwas output and gene names scraped from pangenome fasta headers
 df <- fread(input_gwas_results)
 gene_names <- fread(input_gene_name , fill=TRUE, header = F) %>% rename(chr = V1, gene = V2)
-
-
-
-
-#gene_names <- fread('pangenome/gene_names.txt', fill=TRUE, header = F) %>% rename(chr = V1, gene = V2)
-#df <- fread('geno_pred/output/gwas_MAC250_bslmm_probit_combined.param.txt')
-
-
-
 
 
 #merge genomic prediction results to gene names
@@ -38,7 +27,6 @@ df  <- df %>% arrange(-gamma) %>% rename_at(ncol(df), ~"phenotype" ) %>% left_jo
 #effect size estimate is alpha + beta*gamma as per GEMMA recommendation
 df <- df %>% mutate(eff =  abs(beta*gamma + alpha))  %>% arrange(-eff) %>%
         mutate (type_marker = ifelse(ps == 696969, "pres_abs","snp"))
-
 
 
 #filter down to top 10 markers (by absolute effect size) per phenotype
@@ -62,9 +50,7 @@ pl1 <- ggplot(data = top_hits, aes(x = rank, y = eff)) +
         scale_x_continuous(breaks = function(rank) unique(floor(pretty(seq(min(rank), (max(rank) + 1) * 1.1)))))+
         scale_color_manual(labels = c("Presence/Absence", "SNP"), values = c("#5088C5", "#F28360"))
 
-#ggsave('final_figs/Fig4_marker_effects_700.png', pl1, width = 9, height = 3)
 ggsave(output_tophits_fig, pl1, width = 9, height = 3)
-
 
 
 #output table of top 10 markers (by effect size) for each phenotype

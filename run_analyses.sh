@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -e
+
 #install miniforge3 and restart terminal
 #curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 
@@ -17,3 +21,5 @@ conda activate snakemake
 snakemake -n
 #build dag of pipeline
 snakemake --forceall --dag | dot -Tpdf > dag.pdf
+#run snakemake pipeline
+snakemake --use-conda

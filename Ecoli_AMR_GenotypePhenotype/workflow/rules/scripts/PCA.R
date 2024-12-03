@@ -8,9 +8,6 @@ library(gridExtra)
 library(tidyr)
 library(viridis)
 
-#input_vcf <- "vcf_files/annotated_output_biallelic_goodcontigs_remoutliers_synonymous_MAF10_refedit_subsample.vcf"
-#input_metadata <- "strains_metadata_phenotypes_full.txt"
-
 
 ###########################
 input_vcf <- snakemake@input[['popgen_syn_vcf']]
@@ -18,8 +15,6 @@ input_metadata <- snakemake@input[['metadata_formatted']]
 
 pca_fig_file <- snakemake@output[['pca_fig']]
 pca_model_output_file <- snakemake@output[['pca_model_output']]
-
-
 
 
 ###########################
@@ -31,8 +26,6 @@ genofile <- snpgdsOpen("test.gds", readonly = F)
 
 #read in metadata to explore which metadata features align with
 metadata <- fread(input_metadata)
-
-
 
 
 ###########################
@@ -87,14 +80,8 @@ pl_year <-ggplot(df, aes(x=EV1, y=EV2, colour = Collection.Year)) + geom_point()
 pl2 <- grid.arrange(pl_ref, pl_year, pl_mlst, ncol=3, nrow =1)
 
 
-#ggsave('figs/Fig1_PCA_1000.png', pl2, width = 18, height = 5.5)
-#ggsave('figs/Fig1_PCA_1000.svg', pl2, width = 18, height = 5.5)
-
-
-
 #output figure
 ggsave(pca_fig_file, pl2,  width = 18, height = 5.5)
-
 
 
 

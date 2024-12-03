@@ -6,10 +6,6 @@ library(ggplot2)
 
 ############
 
-#df <- fread('geno_pred/plink/gwas_MAC250_bslmm_probit_top10.ld', header = T) %>% arrange(-R2)
-#top_hits_file <- 'tables/gwas_bslmm_probit_top10_markers.txt'
-
-
 #snakemake file args
 ld_data_file <- snakemake@input[["ld_data"]]
 top_hits_file <- snakemake@input[["top_hits"]]
@@ -28,15 +24,11 @@ top_hits <- fread(top_hits_file, header = T) %>%
     select(-rank)
 
 
-
-
 #connect LD and marker data
 df2 <- df %>% right_join(.,top_hits, by = c('SNP_A' = 'rs')) %>%
     rename(phenochr1 = phenotype) %>%
         right_join(.,top_hits, by = c('SNP_B' = 'rs')) %>%
             rename(phenochr2 = phenotype)
-
-
 
 
 #select columns needed to make LD heatmap among markers
@@ -69,5 +61,4 @@ plheat <- ggplot(data = dfheat, aes(x=Marker_A_ordered, y=Marker_B_ordered, fill
         xlab("First marker") + ylab("Second marker") + guides(fill=guide_legend(title=expression(LD(~r^2))))
 
 #save plot
-#ggsave('figs/Fig6_LDheatmap_500.png', plheat, width = 6, height = 5)
 ggsave(output_heatmap_fig_file, plheat, width = 6, height = 5)
