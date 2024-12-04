@@ -1,5 +1,3 @@
-
-
 ##################
 #### PIPELINE ####
 ##################
@@ -8,7 +6,6 @@
 MAC = [250]
 #list of phenotypes to run genomic prediction on, 'ampicillin','ciprofloxacin', 'trimethoprim.sulfamethoxazole' used in pub
 PHENOTYPES = ['ampicillin','ciprofloxacin', 'trimethoprim.sulfamethoxazole']
-
 
 
 rule all:
@@ -24,7 +21,6 @@ rule all:
         '../figs/Fig5b_Boxplot_ciprofloxacin_marker_effects.png',
         '../tables/corHMM_ciprofloxacin_markers.RDS',
         '../figs/Fig6_ampicillin_top10markers_ld_heatmap.png'
-
 
 
 #download genomic and phenotypic data from A3

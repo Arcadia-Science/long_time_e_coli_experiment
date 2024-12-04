@@ -17,7 +17,6 @@ rule format_metadata:
         "scripts/format_metadata.R"
 
 
-
 #run genomic PCA, generate PCA plots and multinomial models of PCA vs metadata features like country/year of isolation etc.
 rule genotypic_PCA:
     conda: '../envs/popgenR.yaml'
@@ -52,6 +51,8 @@ rule clone_vcf2phylip:
     shell:
         """
         git clone https://github.com/edgardomortiz/vcf2phylip.git ../vcf2phylip
+        cd ../vcf2phylip
+        git checkout tags/v2.8 
         """
 
 
@@ -66,6 +67,7 @@ rule generate_wg_alignment:
         """
         ../vcf2phylip/vcf2phylip.py --output-folder ../tree/alignment/ -i {input.popgen_vcf}
         """
+
 
 #generate species tree
 rule generate_species_tree:

@@ -5,7 +5,6 @@ wildcard_constraints:
     pheno="|".join(PHENOTYPES),
 
 
-
 #filter variants based on MAC cutoff defined
 rule filter_variants_genopred:
     conda: '../envs/bcf.yaml'
@@ -20,7 +19,6 @@ rule filter_variants_genopred:
         bcftools filter -i 'AC > {wildcards.mac}' | \
         sed 's/\.\:\./0\:255\,0/g' > {output.vcf_genopred}
         """
-
 
 
 #generate plink files for MAC filtered SNP dataset
@@ -54,7 +52,7 @@ rule edit_plink_siteid_snp:
 
 
 #prepare presence absence plink files for merging, need unique ID's for all sites for plink merge
-#first adds bogus position (69696969), then generates a unique ID based on contig names and 'presabs' string
+#first adds bogus bp position (69696969), then generates a unique ID based on contig names and 'presabs' string
 #copy over bed and fam, they don't need editing but to keep new files together
 rule edit_plink_siteid_presence_absence:
     conda: '../envs/popgenR.yaml'
@@ -70,7 +68,7 @@ rule edit_plink_siteid_presence_absence:
         presence_absence_fam_edited = '../geno_pred/plink/presence_absence_all_edited.fam'
     shell:
         """
-        awk '{{gsub(/.*/,"696969",$4);print}}' {input.presence_absence_bim}  | \
+        awk '{{gsub(/.*/,"69696969",$4);print}}' {input.presence_absence_bim}  | \
         awk '$2=$1 "presabs"' > {output.presence_absence_bim_edited}
 
         awk '{{gsub(/.*/,"69696969",$3);print}}' {input.presence_absence_map} | \
@@ -79,7 +77,6 @@ rule edit_plink_siteid_presence_absence:
         cp {input.presence_absence_bed}  {output.presence_absence_bed_edited}
         cp {input.presence_absence_fam}  {output.presence_absence_fam_edited}
         """
-
 
 
 #merge the SNP bed and presence/absence marker bed files
@@ -104,8 +101,6 @@ rule merge_plink_input:
         """
 
 
-
-
 #generate phenotype plink files (.fam) by adding susceptible(0) and resistant/intermediate(1) column from metadata file
 rule edit_plink_fam:
     conda: '../envs/popgenR.yaml'
@@ -120,7 +115,6 @@ rule edit_plink_fam:
         "popgenR"
     script:
         "scripts/gwas_plink_fam_edit.R"
-
 
 
 #generate GEMMA relatedness matrix to save time since same matrix will be used for all phenotypes
@@ -140,8 +134,6 @@ rule run_GEMMA_relmatrix:
         """
 
 
-
-
 #create temporary phenotype specific (non fam) gemma input files
 rule GEMMA_temp_files:
     conda: '../envs/popgenR.yaml'
@@ -158,6 +150,7 @@ rule GEMMA_temp_files:
         cp ../geno_pred/plink/annotated_output_MAC{wildcards.mac}_presence_absence.bed ../geno_pred/plink/annotated_output_MAC{wildcards.mac}_presence_absence_{wildcards.pheno}.bed
         cp ../geno_pred/plink/annotated_output_MAC{wildcards.mac}_presence_absence.bim ../geno_pred/plink/annotated_output_MAC{wildcards.mac}_presence_absence_{wildcards.pheno}.bim
         """
+
 
 #run genomic prediction GEMMA genopred probit model
 rule run_GEMMA_gwas_probit:

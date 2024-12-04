@@ -13,6 +13,7 @@ rule GEMMA_combine_output:
         awk '{{gsub(/\.\.\/geno.*MAC[0-9]*_|_bslmm.*/,"",$NF);print}}'  | sed '/^chr.*$/{{x;/^$/!d;g;}}'  >> {output}
         """
 
+
 #scrape gene names from pangenome reference fasta to help interpret genomic prediction results
 rule prep_gene_names:
     conda: '../envs/popgenR.yaml'
@@ -24,6 +25,7 @@ rule prep_gene_names:
         """
         grep -e '>' {input} | sed 's/>//g' > {output}
         """
+
 
 #plot top 10 largest marker effects
 #generate site lists for bcftools and plink filtering of top10 markers by phenotype
@@ -41,6 +43,7 @@ rule plot_gwas_results:
     script:
         "scripts/gwas_results_presence_absence.R"
 
+
 #subsequent analyses depend on specific markers uncovered during genomic prediction (gyrA248, gyrA259, parC239)
 #get gyrA data for gene tree building
 rule generate_gyrA_tree_input:
@@ -55,6 +58,7 @@ rule generate_gyrA_tree_input:
         """
         rules/scripts/generate_gyrA_tree_input.sh {input.input_vcf}  {output.gyrA_vcf} {output.gyrA_vcf_edited}
         """
+
 
 #generate gene tree for gyrA
 rule generate_gyrA_tree:
@@ -119,8 +123,6 @@ rule time_calibrate_species_tree:
         """
 
 
-
-
 #run corHMM to estimate transition rates between allelic states of 3 key ciprlofoxacin markers gyrA248, gyrA259, parC239
 rule run_corHMM_ciprofloxacin_markers:
     conda: '../envs/popgenR.yaml'
@@ -131,7 +133,6 @@ rule run_corHMM_ciprofloxacin_markers:
         corhmm_ciprofloxaxin_markers = '../tables/corHMM_ciprofloxacin_markers.RDS'
     script:
         "scripts/ciprofloxacin_corhmm.R"
-
 
 
 #plink calculate LD among all top10 markers in dataset

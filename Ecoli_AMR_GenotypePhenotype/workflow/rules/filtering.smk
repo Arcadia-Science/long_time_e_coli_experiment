@@ -1,4 +1,5 @@
 
+
 #identify contigs shared by all ECOR strains, will be used to filter downstream
 rule get_good_contigs:
     conda: '../envs/popgenR.yaml'
@@ -8,6 +9,7 @@ rule get_good_contigs:
         '../pangenome/ecor_shared_contigs.txt'
     script:
         "scripts/pan_genome.R"
+
 
 #filter to onyl biallelic SNPs of 3 common classes on good contigs
 rule filter_biallelic_annotated_snps:
@@ -24,6 +26,7 @@ rule filter_biallelic_annotated_snps:
         bcftools filter -e 'TYPE = "indel"'  | bcftools view -M2 -m2 -v snps -Oz  > {output.vcf_bi}
         """
 
+
 #extract quadrupleton genotypes for synonymous SNPs to identify outlier samples in dataset
 rule quads_analysis_input:
     conda: '../envs/bcf.yaml'
@@ -37,6 +40,7 @@ rule quads_analysis_input:
         bcftools filter -i 'INFO/AC = 4'| \
         bcftools query -H -f "%CHROM\t%POS\t%ALT\t%AC\t%DP\t[\t%GT]\n" -o {output.gts_bi_syn}
         """
+
 
 rule identify_outlier_samps:
     conda: '../envs/popgenR.yaml'
@@ -75,6 +79,7 @@ rule generate_sfs_input:
         bcftools query  {input.vcf_remoutlier} -f "%CHROM\t%POS\t%ALT\t%AC\t%DP\t%ANN\n" -o {output.sfs_outliers_removed}
         """
 
+
 rule generate_synonymous_filtered:
     conda: '../envs/bcf.yaml'
     input:
@@ -86,7 +91,6 @@ rule generate_synonymous_filtered:
          zgrep -E 'synonymous|#' {input.vcf_remoutlier} | \
          bcftools filter -i 'AC > 9'| sed 's/\.\:\./0\:255\,0/g'  > {output.vcf_syn_popgen}
         """
-
 
 
 rule generate_popgen_input:
