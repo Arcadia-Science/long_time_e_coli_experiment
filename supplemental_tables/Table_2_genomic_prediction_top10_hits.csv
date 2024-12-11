@@ -1,0 +1,32 @@
+Table 2. Top 10 largest effect markers from genomic prediction on 3 AMR phenotypes (ciprofloxacin ampicillin trimethoprim/sulfamethoxazole). Effect sizes estimates with GEMMA BSLMM linear model.,,,,,,,,,,,
+Contig,Position,N_missing,Alpha,Beta,Gamma,Phenotype,Reference_gene,Absolute_effect,Type_marker,Rank,Notes_BLAST
+Cluster_7017_+_+_GCA_003333865.1_ASM333386v1_+_+_DHJNCGMO_04403_+_+_DHJNCGMO_04404_+_+_DP,22,0,4.00E-05,1.133386,1,trimethoprim.sulfamethoxazole,,1.133426045,snp,1,Nucleotidltransferase/aminoglycoside adenyltransferase familr protein. Sequence hits human ORFeome gateway entry vector
+LMHECDEF_04343,248,0,1.89E-05,0.9983141,1,ciprofloxacin,gyrA,0.9983329768,snp,1,Known resistance mutation gyrA
+LMHECDEF_04343,259,30,1.56E-05,0.8527291,1,ciprofloxacin,gyrA,0.8527446747,snp,2,Known resistance mutation gyrA
+LMHECDEF_01124,239,0,1.60E-05,0.8216989,1,ciprofloxacin,parC,0.8217148641,snp,3,Known resistance mutation Topoisomerase IV
+DHJNCGMO_04404,672,0,1.93E-05,0.5636097,1,trimethoprim.sulfamethoxazole,ant1,0.5636290327,snp,2,"Aminoglycoside adenyltransferas (AadA1/ANT(3""))"
+Cluster_6325_+_+_GCA_003333945.1_ASM333394v1_+_+_MFCAOJAD_04226_+_+_MFCAOJAD_04227_+_+_CO_R,pres_abs,0,4.42E-05,0.5415463,1,ampicillin,,0.5415905408,pres_abs,1,TEM-1 beta lactamase
+Cluster_12949_+_+_GCA_003334065.1_ASM333406v1_+_+_FBCKMFHC_03093_+_+_FBCKMFHC_03094_+_+_CO_F,pres_abs,0,1.87E-05,0.5109123,1,trimethoprim.sulfamethoxazole,,0.5109309941,pres_abs,3,Small fragment of DNA
+MFCAOJAD_04228,pres_abs,0,3.90E-05,0.4731588,1,ampicillin,group_13207,0.4731978032,pres_abs,2,Tn3 family transposase
+Cluster_7829_+_+_GCA_003334785.1_ASM333478v1_+_+_MGCLNDBK_02849_+_+_MGCLNDBK_02850_+_+_DT,pres_abs,0,3.66E-05,0.4443546,1,ampicillin,,0.4443911559,pres_abs,3,Poor hits (mostly hypothetical protein)- DNA-cytosine methyltransferase- nucleotide hits to multiple plasmids
+Cluster_7924_+_+_GCA_003333785.1_ASM333378v1_+_+_MGFKKGBB_02404_+_+_MGFKKGBB_02405_+_+_CO_R,pres_abs,0,2.37E-05,0.7045151,0.57914,ciprofloxacin,,0.4080365764,pres_abs,4,Fragment of a plasmid- top hit PIncFIB plasmid but many other similar hits
+Cluster_6925_+_+_GCA_003333865.1_ASM333386v1_+_+_DHJNCGMO_04404_+_+_DHJNCGMO_04405_+_+_CO_F,pres_abs,0,1.50E-05,0.4075407,1,trimethoprim.sulfamethoxazole,,0.4075557123,pres_abs,4,Protein BLAST hits all hypothetical- but multiple hits on aadA14- aadA16- Aac6'-lb-cr aminoglycoside resistance targets
+MFCAOJAD_02216,pres_abs,0,3.01E-05,0.3652687,1,ampicillin,group_13123,0.3652988227,pres_abs,4,AadA family aminoglycoside 3''-O-nucleotidyltransferase
+IPMBBGLD_03535,pres_abs,0,3.72E-05,0.3434706,0.95012,ampicillin,group_5777,0.3263754571,pres_abs,5,TnpA transposase- lots of hits for IS91-like element ISVsa3 family tranpsosase
+Cluster_8133_+_+_GCA_003333945.1_ASM333394v1_+_+_MFCAOJAD_02210_+_+_MFCAOJAD_02211_+_+_DP,pres_abs,0,2.50E-05,0.3045247,1,ampicillin,,0.3045496766,pres_abs,6,Nucleotide BLAST many hits to Acinetobacter baumanii chromosome regions- BLASTx lots of hits to A. baumanii transposase
+MGFKKGBB_02404,pres_abs,0,2.11E-05,0.6981362,0.42087,ciprofloxacin,group_12063,0.2938457049,pres_abs,5,Recombinase family protein
+Cluster_6004_+_+_GCA_003333975.1_ASM333397v1_+_+_OGHCJOMA_01872_+_+_OGHCJOMA_01873_+_+_CO_F,pres_abs,0,5.29E-05,0.3741718,0.77751,trimethoprim.sulfamethoxazole,,0.2909752465,pres_abs,5,Tyrosine-type recombinase/integrase and fragment of plasmid (RCS96_pII)
+Cluster_2575_+_+_GCA_003334145.1_ASM333414v1_+_+_KBHDICFF_04012_+_+_KBHDICFF_04013_+_+_CO_F,257,0,-8.59E-05,-0.3554087,0.79676,ampicillin,,0.2832613264,snp,7,Putative transposase
+MFCAOJAD_04227,219,0,0.0001001314,0.3492993,0.78745,ampicillin,tnpR,0.2751558652,snp,8,tnpR resolvase
+Cluster_1243_+_+_GCA_003334245.1_ASM333424v1_+_+_CLEHOBFI_04503_+_+_CLEHOBFI_04504_+_+_DT,445,0,0.0001043991,0.3793977,0.61456,ampicillin,,0.2332670496,snp,9,DNA primase
+Cluster_3086_+_+_GCA_003333765.1_ASM333376v1_+_+_EEIHECBN_04173_+_+_EEIHECBN_04174_+_+_CO_R,229,0,7.14E-05,0.7162494,0.27923,ampicillin,,0.2000697003,snp,10,Hypothetical protein
+OGOJFKBC_00513,3646,0,-0.0001614178,-0.4708532,0.24562,trimethoprim.sulfamethoxazole,rhsC_1,0.1158123808,snp,6,rhs element protein (B/C) function poorly understood
+Cluster_11697_+_+_GCA_003334065.1_ASM333406v1_+_+_FBCKMFHC_03096_+_+_FBCKMFHC_03097_+_+_CO_R,pres_abs,0,0.0001975492,0.3518425,0.21761,trimethoprim.sulfamethoxazole,,0.07676199563,pres_abs,7,Small fragment of DNA
+KFGAJDKJ_01185,162,0,0.0001998558,0.3944848,0.17225,trimethoprim.sulfamethoxazole,group_794,0.0681498626,snp,8,DUG987 containing protein- no functional data
+OPGBLGHL_00621,268,0,0.000240352,0.3193421,0.18756,trimethoprim.sulfamethoxazole,group_10682,0.06013615628,snp,9,EntS/YbdA MFS transporter 
+Cluster_4369_+_+_GCA_003333925.1_ASM333392v1_+_+_FDNLPHOJ_00345_+_+_FDNLPHOJ_00346_+_+_CO_F,229,0,0.0001427287,0.4504367,0.11364,trimethoprim.sulfamethoxazole,,0.05133035529,snp,10,Hypothetical protein
+LMHECDEF_03851,258,0,-0.0001222142,-0.8910132,0.03317,ciprofloxacin,psd,0.02967712204,snp,6,Phosphatidylserine decarboxylase proenzyme
+LMHECDEF_02570,480,0,9.75E-05,0.933703,0.02869,ciprofloxacin,treB,0.02688541915,snp,7,Trehalose-specific PTS enzyme: IIB and IIC component;
+ONLNHHCL_03732,414,1,-0.000201868,-0.5179818,0.05024,ciprofloxacin,yicJ_2,0.02622527363,snp,8,MFS family protein- putative permease.
+LMHECDEF_03465,1747,0,0.000147698,0.5166916,0.04764,ciprofloxacin,rlmL,0.02476288582,snp,9,Ribosomal RNA large subunit methyltransferase K/L
+LMHECDEF_03020,609,0,-9.26E-05,-0.8985856,0.02645,ciprofloxacin,trkH,0.02386023664,snp,10,Trk system potassium uptake protein TrkH

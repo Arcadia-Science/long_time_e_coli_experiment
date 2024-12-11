@@ -1,0 +1,8 @@
+Table 3. Logistic regression of 3 key markers on ciprofloxacin resistance. Model includes all single and pairwise combinations (genotypes) of markers observed in the dataset.,,,,
+,Estimate,Std. Error,z value,Pr(>|z|)
+Intercept,-5.120,0.197,-26.028,0.000
+gyrA_248,3.237,0.260,12.458,0.000
+gyrA_259,2.635,1.059,2.488,0.013
+parC_239,2.106,0.504,4.181,0.000
+gyrA_248:gyrA_259,2.293,1.483,1.546,0.122
+gyrA_259:parC_239,-0.901,1.167,-0.772,0.440
