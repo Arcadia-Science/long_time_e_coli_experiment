@@ -1,5 +1,8 @@
 # Predicting antimicrobial resistance phenotypes across 7,000 E. coli genomes
 
+[![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/projects/miniconda/en/latest/)
+[![Snakemake](https://img.shields.io/badge/snakemake--green)](https://snakemake.readthedocs.io/en/stable/)
+
 ## Context
 
 At Arcadia, we're interested in mapping genotype-phenotype relationships at broader evolutionary scales than previously attempted. To do so, we're developing models that can capture genetic relationships—both linear and nonlinear—that may be inaccessible to conventional methods. A key part of this development is identifying and leveraging unique datasets that both capture large scales of diversity and rich phenotypic information.
@@ -9,14 +12,14 @@ In this repo, we characterize the genomic structure and perform genomic predicti
 ## Data
 Phenotypic and Genotypic data on the 7,000 E. coli genomes has previously been [published](https://research.arcadiascience.com/pub/dataset-ecoli-amr-genotype-phenotype/release/1#working-with-a-pangenome) and is available [here](https://zenodo.org/records/12692732)
 
-Additional pre-computed data on presence-absence variation in the dataset is available HERE(ADD ZENODO)
+Additional pre-computed data on presence-absence variation in the dataset is available [here](https://zenodo.org/records/14364732) and includes copies of files needed from the original 7,000 genome study needed to reprodouce all analyses.
 
 ## Installation and Setup
 This repository uses Snakemake, R, and Python.
 Dependency requirements are managed by conda.
 
 
-The bash script `run_analyses.sh` can be used to initiate installation of miniforge3 (conda) and the main environment containing a snakemake installation, as well as running the snakemake pipeline to generate desired results. By default miniforge3 installation is commented out on the first lines of the script, if conda needs to be installed, uncomment these lines prior to running script/workflow. You may have to restart teminral after conda installation for conda to properly initialise for the first time. 
+The bash script `run_analyses.sh` can be used to initiate installation of miniforge3 (conda) and the main environment containing a snakemake installation, as well as running the snakemake pipeline to generate desired results. By default miniforge3 installation is commented out on the first lines of the script, if conda needs to be installed, uncomment these lines prior to running script/workflow. You may have to restart teminral after conda installation for conda to properly initialise for the first time.
 
 
 ## Basic workflow
