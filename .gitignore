@@ -19,4 +19,4 @@ plink/*
 *.nosex
 *.missnp
 *.rda
-Ecoli_AMR_GenotypePhenotype/workflow/.snakemake/*
+.snakemake/*
