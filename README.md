@@ -35,7 +35,7 @@ This workflow cleans up the data, removing outlier samples, filtering down to in
 This workflow generates some pop-gen visualizations such as a site-frequency spectrum and also constructs phylogenetic trees
 - `genomic_prediction.smk`:
 This workflow runs genomic prediction/GWAS using GEMMA
-- `genomic_prediction_post_hoc`:
+- `genomic_prediction_post_hoc.smk`:
   This workflow runs exploratory post-hoc genomic prediction analyses
 
 ## Directory Structure
