@@ -40,6 +40,10 @@ This workflow runs genomic prediction/GWAS using GEMMA
 
 ## Directory Structure
 
+### Supplemental pub tables
+- `supplemental_tables`
+Directory where supplemental pub tables can be accessed (both pdf and csv files available). Tables can also be reproduced by running snakemake pipe (see below)
+
 ### Data
 - `Ecoli_AMR_GenotypePhenotype/vcf_files`
 Directory for storing genotypic information on SNPs/indels
