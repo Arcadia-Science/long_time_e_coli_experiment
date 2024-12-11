@@ -42,7 +42,7 @@ This workflow runs genomic prediction/GWAS using GEMMA
 
 ### Supplemental pub tables
 - `supplemental_tables`
-Directory where supplemental pub tables can be accessed (both pdf and csv files available). Tables can also be reproduced by running snakemake pipe (see below)
+Directory where supplemental pub tables can be accessed (both pdf and csv files available). Tables can also be reproduced by running snakemake pipeline (see above)
 
 ### Data
 - `Ecoli_AMR_GenotypePhenotype/vcf_files`
