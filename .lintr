@@ -3,3 +3,4 @@ linters: linters_with_defaults(
     pipe_continuation_linter = NULL,
     semicolon_linter = NULL
   )
+  
