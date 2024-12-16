@@ -1,0 +1,5 @@
+linters: linters_with_defaults(
+    line_length_linter(200),
+    pipe_continuation_linter = NULL,
+    semicolon_linter = NULL
+  )
