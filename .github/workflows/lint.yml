@@ -25,7 +25,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Lint root directory and children
-        run: lintr::lint_dir(linters = lintr::linters_with_defaults(object_usage_linter = NULL, line_length_linter = NULL, indentation_linter = NULL, pipe_continuation_linter = NULL, semicolon_linter = NULL,  object_name_linter))
+        run: lintr::lint_dir(linters = lintr::linters_with_defaults(object_usage_linter = NULL, line_length_linter = NULL, indentation_linter = NULL, pipe_continuation_linter = NULL, semicolon_linter = NULL,  object_name_linter = NULL))
         shell: Rscript {0}
         env:
           LINTR_ERROR_ON_LINT: true
