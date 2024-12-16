@@ -105,9 +105,9 @@ rownames(cip_metdata_full) <- geno_cip_markers_long$taxa
 pl_base <- ggtree(gyrA_tree, layout = "circular")
 
 #plot tree with ciprofloxacin phenotype and 3 focal markers (allele state) added on
-gyra_tree_plot <- gheatmap(pl_base, cip_metdata_full,width = 0.2,color = NULL,colnames_angle = 45) +
+gyra_tree_plot <- gheatmap(pl_base, cip_metdata_full, width = 0.2, color = NULL, colnames_angle = 45) +
  scale_fill_manual(breaks = c("0", "1", "2", "3", "Intermediate", "Resistant", "Susceptible"),
-        values = c("#73B5E3", "#F7B846", "#3B9886", "#97CD78" , "#B5BEA4", "#F28360", "#5088C5"),  na.value = NA)
+        values = c("#73B5E3", "#F7B846", "#3B9886", "#97CD78", "#B5BEA4", "#F28360", "#5088C5"),  na.value = NA)
 
 
 ggsave(gyrA_tree_fig, plot = gyra_tree_plot)
@@ -163,7 +163,7 @@ ggsave(cipro_marker_boxplot, plot = pl_effect, width = 7, height = 5)
 epi <- cip_metdata_full %>% mutate(pheno = ifelse(ciprofloxacin == "Resistant", 1,
                                                 ifelse(ciprofloxacin == "Susceptible", 0, NA))) %>%
                                                 mutate(gyrA_259_simp = ifelse(as.numeric(as.character(gyrA_259)) > 0, 1, 0)) %>%
-                                                mutate( gyrA_248 = as.numeric(as.character(gyrA_248)),
+                                                mutate(gyrA_248 = as.numeric(as.character(gyrA_248)),
                                                         gyrA_259_simp = as.numeric(as.character(gyrA_259_simp)),
                                                         parC_239 = as.numeric(as.character(parC_239)))
 
