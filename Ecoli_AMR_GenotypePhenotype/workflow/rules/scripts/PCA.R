@@ -19,7 +19,7 @@ pca_model_output_file <- snakemake@output[['pca_model_output']]
 
 ###########################
 #create temporary gds file from vcf
-snpgdsVCF2GDS(input_vcf, "test.gds", method="biallelic.only")
+snpgdsVCF2GDS(input_vcf, "test.gds", method = "biallelic.only")
 
 #read temp gds file
 genofile <- snpgdsOpen("test.gds", readonly = FALSE)
@@ -44,8 +44,8 @@ tab <- data.frame(sample.id = pca$sample.id,
 
 #join PCA analysis results to metdata features of interest
 #calculate new mlst (phylogroup) metdata column that only keeps an mlst label if there are enough observations (50)
-df <- metadata %>% select(sample.id, Isolation.Country, Collection.Year,ref, Other.Typing) %>%
-        right_join(.,tab, by = 'sample.id') %>%
+df <- metadata %>% select(sample.id, Isolation.Country, Collection.Year, ref, Other.Typing) %>%
+        right_join(., tab, by = 'sample.id') %>%
                 group_by(Other.Typing) %>% mutate(ntype = n()) %>%
                 mutate(mlst = ifelse(ntype > 49, Other.Typing, NA)) %>%
                 mutate(mlst = ifelse(mlst == '', NA, mlst)) %>% ungroup(.)
@@ -61,20 +61,20 @@ pl_ref <- ggplot(df, aes(x = EV1, y = EV2, colour = ref)) + geom_point() +
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black")) +
         scale_colour_manual(labels = c("Non-reference", "Reference"), values = c("#5088C5", "#F28360")) +
-        xlab('PC1') + ylab('PC2')+ labs(color = 'Pangenome\nreference')
+        xlab('PC1') + ylab('PC2') + labs(color = 'Pangenome\nreference')
 #mlst label
-pl_mlst <-ggplot(df, aes(x = EV1, y = EV2, colour = mlst)) + geom_point() + stat_ellipse() +
+pl_mlst <- ggplot(df, aes(x = EV1, y = EV2, colour = mlst)) + geom_point() + stat_ellipse() +
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+        panel.background = element_blank(), axis.line = element_line(colour = "black")) +
         viridis::scale_color_viridis(discrete = TRUE, option = 'magma') +
-        xlab('PC1') + ylab('PC2') + labs(color='Phylogroup/MLST')
+        xlab('PC1') + ylab('PC2') + labs(color = 'Phylogroup/MLST')
 
 #collection year label
-pl_year <-ggplot(df, aes(x = EV1, y = EV2, colour = Collection.Year)) + geom_point() + labs(colour='Year') +
+pl_year <- ggplot(df, aes(x = EV1, y = EV2, colour = Collection.Year)) + geom_point() + labs(colour='Year') +
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black")) +
         viridis::scale_color_viridis() +
-        xlab('PC1') + ylab('PC2') + labs(color='Collection Year')
+        xlab('PC1') + ylab('PC2') + labs(color = 'Collection Year')
 
 #combine plots into one plot
 pl2 <- grid.arrange(pl_ref, pl_year, pl_mlst, ncol = 3, nrow = 1)

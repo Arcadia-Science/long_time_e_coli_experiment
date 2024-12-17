@@ -16,4 +16,4 @@ df2 <- df %>% select(-X) %>%
 good_contigs <- df2 %>% filter(value == 'Present' & count == number_ECOR_strains) %>% select(Locus) %>% unique()
 
 #output list of good contigs to use in downstream analyses
-write.table(good_contigs,output_file, sep = '\t', row.names = FALSE, col.names = FALSE, quote = FALSE)
+write.table(good_contigs, output_file, sep = '\t', row.names = FALSE, col.names = FALSE, quote = FALSE)

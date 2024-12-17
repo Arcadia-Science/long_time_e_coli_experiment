@@ -28,7 +28,7 @@ metadata <- fread(metadata_file)
 #format metadata to ignore small MLST groups (less than 100 samples) that clutter figures
 metadata <- metadata %>%
         rename(taxa = sample.id) %>%
-        relocate(taxa, .before = X )%>%
+        relocate(taxa, .before = X) %>%
                  group_by(Other.Typing) %>%
                         mutate(count_type = n()) %>%
                         mutate(mlst = ifelse(count_type < 100, NA, Other.Typing))
@@ -39,7 +39,7 @@ metadata <- metadata %>%
 
 ###########
 #phylogroup
-metadata_subset_phylo <- metadata %>% ungroup(.) %>% select( mlst) %>%
+metadata_subset_phylo <- metadata %>% ungroup(.) %>% select(mlst) %>%
         mutate(mlst = as.factor(mlst)) %>% data.frame(.)
 #add sample names as rownames to allow for plotting of metadata on tree
 rownames(metadata_subset_phylo) <- metadata$taxa
@@ -57,32 +57,32 @@ mlst_colours <- c('phylogroup:A' = '#73B5E3',
                  'mlst:95' = '#8A99AD'
                  )
 #plot species tree with clade labels
-plot_phylogroups <- gheatmap(ggtree(tree_test,layout='circular', size=0.25), metadata_subset_phylo,width=0.2,color = NULL,font.size=0) +
-        theme(legend.position = "right") + guides(fill=guide_legend(title="Phylogroup/MLST")) +
-        scale_fill_manual(values= mlst_colours, na.translate = F)+
-        geom_cladelabel(node=7113, label="phylogroup B2",color="#7A77AB",offset=.2,,offset.text=.1) +
-        geom_cladelabel(node=11593, label="phylogroup D",color="#97CD78",offset=.33,offset.text=.1) +
-        geom_cladelabel(node=11297, label="phylogroup F",color="#F898AE",offset=.3,offset.text=.1, hjust=0.8)
+plot_phylogroups <- gheatmap(ggtree(tree_test, layout = 'circular', size=0.25), metadata_subset_phylo, width = 0.2, color = NULL, font.size=0) +
+        theme(legend.position = "right") + guides(fill = guide_legend(title = "Phylogroup/MLST")) +
+        scale_fill_manual(values = mlst_colours, na.translate = FALSE) +
+        geom_cladelabel(node = 7113, label = "phylogroup B2", color = "#7A77AB", offset = .2, offset.text = .1) +
+        geom_cladelabel(node = 11593, label = "phylogroup D", color = "#97CD78", offset = .33, offset.text= .1) +
+        geom_cladelabel(node = 11297, label = "phylogroup F", color = "#F898AE", offset = .3, offset.text= .1, hjust = 0.8)
 
 
 
 
 ###########
 #select specific antibiotic resistance phenotypes to plot from metadata, convert to factor
-metadata_subset <- metadata %>% ungroup(.) %>% select( ciprofloxacin, ampicillin, trimethoprim.sulfamethoxazole) %>%
+metadata_subset <- metadata %>% ungroup(.) %>% select(ciprofloxacin, ampicillin, trimethoprim.sulfamethoxazole) %>%
         mutate_if(is.character, as.factor) %>% data.frame(.)
 
 #add sample names as rownames to allow for plotting of metadata on tree
 rownames(metadata_subset) <- metadata$taxa
 
 #plot tree with focal resistance phenotypes painted on
-plot_phenotypes <- gheatmap(ggtree(tree_test,layout='circular', size=0.25), metadata_subset,width=0.3,color = NULL,colnames_angle=45, font.size=3) +
-    viridis::scale_fill_viridis(discrete = TRUE, na.translate = F)+ guides(fill=guide_legend(title="AMR phenotype"))
+plot_phenotypes <- gheatmap(ggtree(tree_test, layout = 'circular', size = 0.25), metadata_subset, width = 0.3, color = NULL, colnames_angle = 45, font.size = 3) +
+    viridis::scale_fill_viridis(discrete = TRUE, na.translate = FALSE) + guides(fill = guide_legend(title = "AMR phenotype"))
 
 
 ###########
 #combine plots into one plot
-plot_trees_all <- grid.arrange(plot_phylogroups, plot_phenotypes, ncol=2, nrow =1)
+plot_trees_all <- grid.arrange(plot_phylogroups, plot_phenotypes, ncol = 2, nrow = 1)
 
 #output figure
 ggsave(tree_fig_file, plot_trees_all, width = 13)
