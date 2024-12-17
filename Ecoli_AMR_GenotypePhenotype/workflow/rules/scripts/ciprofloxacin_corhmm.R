@@ -55,7 +55,7 @@ geno_cip_markers <- geno %>%
                 mutate(snp_id = paste(CHROM, POS, sep = "_")) %>%
                 relocate(snp_id, .before = CHROM) %>%
                 select(-CHROM, -POS, -ALT, -AC, -DP) %>%
-                 filter(snp_id == "LMHECDEF_04343_259" | snp_id == "LMHECDEF_04343_248"|  snp_id == "LMHECDEF_01124_239") #selects focal markers
+                 filter(snp_id == "LMHECDEF_04343_259" | snp_id == "LMHECDEF_04343_248" |  snp_id == "LMHECDEF_01124_239") #selects focal markers
 
 #convert to long format, code genotypes as factor and rename markers to gene name + position
 geno_cip_markers_long <- geno_cip_markers %>%
