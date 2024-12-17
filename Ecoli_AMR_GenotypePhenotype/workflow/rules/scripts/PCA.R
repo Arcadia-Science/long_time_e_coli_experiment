@@ -70,7 +70,7 @@ pl_mlst <- ggplot(df, aes(x = EV1, y = EV2, colour = mlst)) + geom_point() + sta
         xlab('PC1') + ylab('PC2') + labs(color = 'Phylogroup/MLST')
 
 #collection year label
-pl_year <- ggplot(df, aes(x = EV1, y = EV2, colour = Collection.Year)) + geom_point() + labs(colour='Year') +
+pl_year <- ggplot(df, aes(x = EV1, y = EV2, colour = Collection.Year)) + geom_point() + labs(colour = 'Year') +
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black")) +
         viridis::scale_color_viridis() +

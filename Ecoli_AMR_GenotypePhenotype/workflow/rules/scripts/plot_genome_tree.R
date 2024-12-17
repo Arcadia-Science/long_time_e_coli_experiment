@@ -57,12 +57,12 @@ mlst_colours <- c('phylogroup:A' = '#73B5E3',
                  'mlst:95' = '#8A99AD'
                  )
 #plot species tree with clade labels
-plot_phylogroups <- gheatmap(ggtree(tree_test, layout = 'circular', size=0.25), metadata_subset_phylo, width = 0.2, color = NULL, font.size=0) +
+plot_phylogroups <- gheatmap(ggtree(tree_test, layout = 'circular', size = 0.25), metadata_subset_phylo, width = 0.2, color = NULL, font.size = 0) +
         theme(legend.position = "right") + guides(fill = guide_legend(title = "Phylogroup/MLST")) +
         scale_fill_manual(values = mlst_colours, na.translate = FALSE) +
         geom_cladelabel(node = 7113, label = "phylogroup B2", color = "#7A77AB", offset = .2, offset.text = .1) +
-        geom_cladelabel(node = 11593, label = "phylogroup D", color = "#97CD78", offset = .33, offset.text= .1) +
-        geom_cladelabel(node = 11297, label = "phylogroup F", color = "#F898AE", offset = .3, offset.text= .1, hjust = 0.8)
+        geom_cladelabel(node = 11593, label = "phylogroup D", color = "#97CD78", offset = .33, offset.text = .1) +
+        geom_cladelabel(node = 11297, label = "phylogroup F", color = "#F898AE", offset = .3, offset.text = .1, hjust = 0.8)
 
 
 

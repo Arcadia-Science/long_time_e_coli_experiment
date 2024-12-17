@@ -69,13 +69,13 @@ geno_cip_markers <- geno %>% colClean_bracket(.) %>% colClean_GT(.) %>%
                 mutate(snp_id = paste(CHROM, POS, sep = "_")) %>%
                 relocate(snp_id, .before = CHROM) %>%
                 select(-CHROM, -POS, -ALT, -AC, -DP) %>%
-                 filter(snp_id == "LMHECDEF_04343_259" | snp_id == "LMHECDEF_04343_248"|  snp_id == "LMHECDEF_01124_239") #select focal markers
+                 filter(snp_id == "LMHECDEF_04343_259" | snp_id == "LMHECDEF_04343_248" |  snp_id == "LMHECDEF_01124_239") #select focal markers
 
 #convert to long and recode as factor
 geno_cip_markers_long <- geno_cip_markers %>%
   group_by(snp_id) %>%
-    pivot_longer(cols=c(-snp_id), names_to="taxa")%>%
-    pivot_wider(names_from=c(snp_id)) %>%
+    pivot_longer(cols = c(-snp_id), names_to = "taxa") %>%
+    pivot_wider(names_from = c(snp_id)) %>%
     mutate(LMHECDEF_04343_259 = as.factor(LMHECDEF_04343_259),
            LMHECDEF_04343_248 = as.factor(LMHECDEF_04343_248),
            LMHECDEF_01124_239 = as.factor(LMHECDEF_01124_239)) %>%
@@ -136,12 +136,12 @@ plot_markers <- cip_metdata_full %>% mutate(Resistance = ifelse(ciprofloxacin ==
                                                                 mutate(genotype = paste0(gyrA_248, gyrA_259_simp, parC_239))
 
 #boxplot of ciprofloxacin resistance phenotype vs allele state (ref/alt)
-pl_effect <- ggplot(plot_markers, aes(x=genotype, y = Resistance)) + geom_boxplot() +
-        geom_jitter(shape=16, position=position_jitter(0.05)) + theme_bw() +
+pl_effect <- ggplot(plot_markers, aes(x = genotype, y = Resistance)) + geom_boxplot() +
+        geom_jitter(shape = 16, position = position_jitter(0.05)) + theme_bw() +
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-        xlab("Genotype")+
-        scale_x_discrete(labels=c(
+        panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+        xlab("Genotype") +
+        scale_x_discrete(labels = c(
                                 "000" = "Ancetral\nstate",
                                 "001" = "parC239",
                                 "010" = "gyrA259",
@@ -168,7 +168,7 @@ epi <- cip_metdata_full %>% mutate(pheno = ifelse(ciprofloxacin == "Resistant", 
                                                         parC_239 = as.numeric(as.character(parC_239)))
 
 #run logistic regression of allele state of arkers vs ciprofloxacin resistance include all pairwise interaction terms
-mylogit <- glm(pheno ~ gyrA_248 + gyrA_259_simp + parC_239 + gyrA_248*gyrA_259_simp + parC_239*gyrA_259_simp + parC_239*gyrA_248,
+mylogit <- glm(pheno ~ gyrA_248 + gyrA_259_simp + parC_239 + gyrA_248 * gyrA_259_simp + parC_239 * gyrA_259_simp + parC_239 * gyrA_248,
                 data = epi, family = "binomial")
 
 #output summary of model to table

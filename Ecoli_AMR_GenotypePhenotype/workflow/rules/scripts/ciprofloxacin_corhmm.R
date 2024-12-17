@@ -60,7 +60,7 @@ geno_cip_markers <- geno %>%
 #convert to long format, code genotypes as factor and rename markers to gene name + position
 geno_cip_markers_long <- geno_cip_markers %>%
   group_by(snp_id) %>%
-    pivot_longer(cols = c(-snp_id), names_to="taxa") %>%
+    pivot_longer(cols = c(-snp_id), names_to = "taxa") %>%
     pivot_wider(names_from = c(snp_id)) %>%
     mutate(
            LMHECDEF_04343_259 = as.factor(LMHECDEF_04343_259),

@@ -25,7 +25,7 @@ df  <- df %>% arrange(-gamma) %>% rename_at(ncol(df), ~"phenotype") %>% left_joi
 
 #calculate absolute effect size and sort markers from largest effect to smallest, then label presence/absence loci vs. SNPs based on bogus position coordinate 696969
 #effect size estimate is alpha + beta*gamma as per GEMMA recommendation
-df <- df %>% mutate(eff =  abs(beta*gamma + alpha))  %>% arrange(-eff) %>%
+df <- df %>% mutate(eff =  abs(beta * gamma + alpha))  %>% arrange(-eff) %>%
         mutate(type_marker = ifelse(ps == 696969, "pres_abs", "snp"))
 
 
