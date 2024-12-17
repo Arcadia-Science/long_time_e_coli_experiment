@@ -35,7 +35,7 @@ pheno_name <- read.csv(SRA_genome_name_file)
 #metadata file containing alternate data such as sampling location etc
 metadata <- read.csv(strains_metadata_file)
 #outliers identified in filtering that need to be removed
-outliers<- fread(outlier_samples_file, header = FALSE)
+outliers <- fread(outlier_samples_file, header = FALSE)
 
 
 ##########################
