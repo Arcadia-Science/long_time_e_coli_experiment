@@ -1,0 +1,9 @@
+Table 4.  Transition rates between ancestral/mutated state at 3 key ciprofloxacin resistance sites estimated with corHMM. Transitions are coded from row state to column state.,,,,,,,
+,No_mutations,gyrA_259,gyrA_248,parC_239,gyrA_248/ gyrA_259,parC_239/ gyrA_248,gyrA259/ gyrA_248/ parC_239
+No_mutations,NA,2.58,43.79,0.00,NA,NA,NA
+gyrA_259,100.00,NA,NA,NA,0.00,NA,NA
+gyrA_248,100.00,NA,NA,NA,100.00,100.00,NA
+parC_239,NA,100.00,100.00,NA,NA,NA,100.00
+gyrA_248/ gyrA_259,100.00,NA,NA,100.00,NA,0.00,NA
+parC_239/ gyrA_248,NA,NA,100.00,NA,NA,NA,100.00
+gyrA259/ gyrA_248/ parC_239,NA,NA,NA,NA,7.49,72.49,NA

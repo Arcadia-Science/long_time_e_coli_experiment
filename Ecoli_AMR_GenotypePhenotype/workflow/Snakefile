@@ -1,0 +1,59 @@
+##################
+#### PIPELINE ####
+##################
+
+#minor allele count cutoffs for genomic prediction, pub uses 250
+MAC = [250]
+#list of phenotypes to run genomic prediction on, 'ampicillin','ciprofloxacin', 'trimethoprim.sulfamethoxazole' used in pub
+PHENOTYPES = ['ampicillin','ciprofloxacin', 'trimethoprim.sulfamethoxazole']
+
+
+rule all:
+   input:
+        '../vcf_files/annotated_output.vcf.gz',
+        '../figs/Fig1_SFS_combined_remoutliers.png',
+        '../figs/Fig2_genomic_PCA.png',
+        '../figs/Fig3_genome_tree_synonymous_MAC10.png',
+        expand("../geno_pred/output/gwas_MAC{mac}_{pheno}_bslmm_probit.param.txt", mac=MAC, pheno = PHENOTYPES),
+        expand("../geno_pred/output/gwas_MAC{mac}_bslmm_probit_combined.param.txt", mac=MAC),
+        '../figs/Fig4_gwas_tophits_effects.png',
+        '../figs/Fig5a_gyrA_tree_markers.png',
+        '../figs/Fig5b_Boxplot_ciprofloxacin_marker_effects.png',
+        '../tables/corHMM_ciprofloxacin_markers.RDS',
+        '../figs/Fig6_ampicillin_top10markers_ld_heatmap.png'
+
+
+#download genomic and phenotypic data from A3
+#TODO redirect to zenodo
+rule get_data:
+    conda: 'envs/aws_cli.yaml'
+    input:
+    output:
+        '../vcf_files/annotated_output.vcf.gz',
+        '../vcf_files/filtered_output.vcf.gz',
+        '../pangenome/pangenome_genomes_SRA_GCA.csv',
+        '../pangenome/whole_pan_ecor_presence_absence.csv',
+        '../pangenome/whole_pangenome.fasta',
+        '../phenotype_matrix/phenotype_matrix_08302024.csv',
+        '../phenotype_matrix/SRA_to_genome_name.csv',
+        '../strains_metadata.csv',
+        '../presence_absence_data/presence_absence_sfs.txt',
+        '../presence_absence_data/presence_absence_all.bim',
+        '../presence_absence_data/presence_absence_all.bed',
+        '../presence_absence_data/presence_absence_all.fam',
+        '../presence_absence_data/presence_absence_all.map'
+    shell:
+        '''
+        #wget https://zenodo.org/records/14364732/files/Ecoli_AMR_GenotypePhenotype.zip
+        aws s3 cp s3://ecoli-pangenomics-data/Ecoli_AMR_GenotypePhenotype.zip ../../Ecoli_AMR_GenotypePhenotype.zip
+        cd ../../
+        unzip -n Ecoli_AMR_GenotypePhenotype.zip
+        rm
+        '''
+
+# Snakefiles with rules for particular pieces of the pipeline
+# See Snakefiles for details
+include: 'rules/filtering.smk'
+include: 'rules/popgen_analyses.smk'
+include: 'rules/genomic_prediction.smk'
+include: 'rules/genomic_prediction_post_hoc.smk'
