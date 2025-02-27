@@ -1,6 +1,5 @@
 #!/bin/bash
 
 #get data
-#TODO change to public zenodo
-aws s3 cp s3://ecoli-pangenomics-data/Ecoli_AMR_GenotypePhenotype/ Ecoli_AMR_GenotypePhenotype --recursive
-
+curl https://zenodo.org/api/records/14364732/draft/files/Ecoli_AMR_GenotypePhenotype.zip/content
+unzip Ecoli_AMR_GenotypePhenotype.zip
