@@ -1,7 +1,6 @@
 cff-version: 1.2.0
 message: If you use this software, please cite the associated publication.
-title: Population genomics and antimicrobial resistance genetic architecture in the
-  7000 E. coli strains dataset
+title: Predicting antimicrobial resistance phenotypes across 7,000 E. coli genomes
 doi: 10.57844/arcadia-8391-465f
 authors:
 - family-names: Bell
@@ -21,8 +20,7 @@ authors:
   affiliation: Arcadia Science
   orcid: https://orcid.org/0000-0002-1073-1494
 preferred-citation:
-  title: Population genomics and antimicrobial resistance genetic architecture in
-    the 7000 E. coli strains dataset
+  title: Predicting antimicrobial resistance phenotypes across 7,000 E. coli genomes
   type: article
   doi: 10.57844/arcadia-8391-465f
   authors:
