@@ -44,11 +44,9 @@ rule get_data:
         '../presence_absence_data/presence_absence_all.map'
     shell:
         '''
-        #wget https://zenodo.org/records/14364732/files/Ecoli_AMR_GenotypePhenotype.zip
-        aws s3 cp s3://ecoli-pangenomics-data/Ecoli_AMR_GenotypePhenotype.zip ../../Ecoli_AMR_GenotypePhenotype.zip
         cd ../../
+        wget https://zenodo.org/records/14364732/files/Ecoli_AMR_GenotypePhenotype.zip
         unzip -n Ecoli_AMR_GenotypePhenotype.zip
-        rm
         '''
 
 # Snakefiles with rules for particular pieces of the pipeline
